@@ -1,0 +1,9 @@
+[project]
+name = "ValueCraft"
+version = "1.0.0"
+description = "Financial valuation and modeling project developed in Python"
+dependencies = ["flask",]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"

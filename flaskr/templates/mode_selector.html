@@ -1,0 +1,13 @@
+<div class="header">
+    Discounted Cash Flow Valuation
+</div>
+
+<div class="flex-header">
+  <form action="/" method="POST">
+    <button type="submit" name="app_mode" value="Public">Public company valuation</button>
+    <button type="submit" id="private" name="app_mode" value="Private">Private company valuation</button>
+  </form>
+</div>
+
+<iframe src="/SP" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+        onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>

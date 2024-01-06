@@ -1,0 +1,110 @@
+body {background: GhostWhite no-repeat center fixed; background-size:cover}
+* {box-sizing:border-box; font-family:Courier; font-size:1vw}
+
+/*home page*/
+.header {font-family:Arial; font-size:5vw; font-weight:900; color:#006192; text-align:center; line-height:1.2;
+         width:100%; margin-bottom:2vw}
+
+.flex-header form {display:flex; justify-content:center; width:100%; margin-bottom:2vw}
+.flex-header button {width:18vw; height:6vw; padding:1vw; font-size:1.5vw; color:white; background-color:#006192;
+                     border:none; font-weight:bold; border-radius:1vw; text-align:center; margin-right:1vw; cursor:pointer; text-decoration:none}
+
+@media screen and (max-width: 1000px) {.header {font-size:10vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {.flex-header form {margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {.flex-header button {width:60vw; height:20vw; padding:2vw; font-size:5vw}}
+@media screen and (max-width: 1000px) {#private {display:none}}
+
+/*stock ticker and growth rate entry pages*/
+.flex-info {display:flex; align-items:center; padding:1vw; color:white; background-color:DodgerBlue; font-weight:bold;
+            line-height:1.5; width:80%; margin-left:1vw}
+.flex-info div {font-size:1.5vw}
+#emoji-info {font-size:2.5vw; margin-right:0.5vw}
+#emoji-info2 {font-size:2.5vw; margin-right:0.5vw}
+#emoji-info3 {font-size:2.5vw; margin-right:0.5vw}
+
+.flex-alert {display:flex; align-items:center; padding:1vw; color:red; background-color:yellow; font-weight:bold;
+            line-height:1.5; width:80%; margin-left:1vw}
+.flex-alert div {font-size:1.5vw}
+#emoji-alert {font-size:2.5vw; margin-right:0.5vw}
+#emoji-alert2 {font-size:2.5vw; margin-right:0.5vw}
+#alert-text {text-align:left; padding:1vw; width:80%; height:10vw; white-space:pre-line; font-size:1.5vw; margin-left:1vw}
+
+input[name="ticker"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
+input[name="growth"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
+
+@media screen and (max-width: 1000px) {.flex-info, .flex-alert {width:100%; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {.flex-info div, .flex-alert div {font-size:5vw}}
+@media screen and (max-width: 1000px) {#alert-text {height:20vw; font-size:5vw; width:100%; height:80vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {#emoji-info, #emoji-info2, #emoji-info3, #emoji-alert, #emoji-alert2 {font-size:8vw}}
+@media screen and (max-width: 1000px) {input[name="ticker"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {input[name="growth"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
+
+/*private specific items*/
+input[name="company_code"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
+input[name="debt"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
+select, input[name="industry"], option {font-size:1vw}
+label {margin-left:1vw}
+
+@media screen and (max-width: 1000px) {select, input[name="industry"], option {font-size:5vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {label > strong {font-size:5vw}}
+
+/*menu option selector*/
+.flex-menu form {display:flex; margin-top:2vw; margin-left:1vw}
+.flex-menu button {padding:1vw; width:12vw; height:4vw; color:white; font-size:1vw; background-color:#006192;
+                   border:none; font-weight:bold; border-radius:1vw; text-align:center; margin-bottom:1vw; margin-right:1vw;
+                   cursor:pointer; text-decoration:none}
+
+@media screen and (max-width: 1000px) {.flex-menu form {flex-direction:column; align-items:center; margin-top:10vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {.flex-menu button {padding:2vw; width:60vw; height:20vw; font-size:5vw; margin-bottom:5vw}}
+
+/*home page - market price table*/
+.dataframe_sp500 {border-collapse:collapse; margin-left:0.5vw; margin-right:0.5vw; width:100%}
+.dataframe_sp500 th {color:white; background-color:navy}
+.dataframe_sp500 th, .dataframe_sp500 td {text-align:center; width:12vw; padding:0.5vw; font-size:1.4vw; border:0.5vw solid #ddd}
+
+@media screen and (max-width: 1000px) {.dataframe_sp500 th:nth-child(4), .dataframe_sp500 td:nth-child(4) {display:none}}
+@media screen and (max-width: 1000px) {.dataframe_sp500 th:nth-child(5), .dataframe_sp500 td:nth-child(5) {display:none}}
+@media screen and (max-width: 1000px) {.dataframe_sp500 th, .dataframe_sp500 td {font-size:4vw}}
+/*@media screen and (max-width: 1000px) {.dataframe_sp500 {display:none}}*/
+
+/*financial statement table*/
+.dataframe_statement {border-collapse:collapse; margin-left:0.5vw; margin-right:0.5vw; width:100%}
+.dataframe_statement th {color:white; background-color:navy}
+.dataframe_statement th, .dataframe_statement td {text-align:center; width:10vw; padding:0.5vw; font-size:1vw; border:0.5vw solid #ddd}
+
+@media screen and (max-width: 1000px) {.dataframe_statement {display:none}}
+
+/*key indicator table*/
+.dataframe_indicator {border-collapse:collapse; margin-left:0.5vw; margin-right:0.5vw}
+.dataframe_indicator th {color:white; background-color:navy}
+.dataframe_indicator th, .dataframe_indicator td {text-align:center; width:12vw; padding:0.5vw; font-size:1vw; font-weight:bold; border:0.5vw solid #ddd}
+
+@media screen and (max-width: 1000px) {.dataframe_indicator {width:100%}}
+@media screen and (max-width: 1000px) {.dataframe_indicator th, .dataframe_indicator td {padding:4vw; font-size:5vw}}
+
+/*wacc data entry table*/
+.dataframe_wacc {border-collapse:collapse; margin: 2vw 1vw 1vw 1vw}
+.dataframe_wacc th {color:white; background-color:navy}
+.dataframe_wacc th, .dataframe_wacc td {text-align:center; width:12vw; padding:0.5vw; font-size:1vw; font-weight:bold; border:0.5vw solid #ddd}
+.dataframe_wacc input[type="number"] {width:10vw; font-size:1vw; text-align:center}
+.dataframe_wacc input[name="benchmark"] {width:10vw; font-size:1vw; text-align:center}
+
+@media screen and (max-width: 1000px) {.dataframe_wacc {margin-bottom:10vw; width:100%}}
+@media screen and (max-width: 1000px) {.dataframe_wacc th, .dataframe_wacc td {width:50%; padding:2vw; font-size:5vw}}
+@media screen and (max-width: 1000px) {.dataframe_wacc input[type="number"] {width:90%; font-size:5vw}}
+@media screen and (max-width: 1000px) {.dataframe_wacc input[name="benchmark"] {width:90%; font-size:5vw}}
+
+/*final page - summary table*/
+.dataframe_summary {border-collapse:collapse; margin: 2vw 1vw 1vw 1vw}
+.dataframe_summary th {color:white; background-color:navy}
+.dataframe_summary th, .dataframe_summary td {text-align:center; width:12vw; padding:0.5vw; font-size:1vw; font-weight:bold; border:0.5vw solid #ddd}
+
+@media screen and (max-width: 1000px) {.dataframe_summary {margin-top:5vw; margin-bottom:5vw; width:100%}}
+@media screen and (max-width: 1000px) {.dataframe_summary th, .dataframe_summary td {width:50%; padding:2vw; font-size:5vw}}
+
+/*action buttons*/
+input.action, button.action, a.action  {padding:1vw; color:white; background-color:DarkSlateGrey; font-weight:bold;
+                                        text-align:center; cursor:pointer; margin-left:1vw; text-decoration:none; border:none}
+a:hover, button:hover, input[type="submit"]:hover {background-color:navy}
+
+@media screen and (max-width: 1000px) {input.action, button.action, a.action {font-size:5vw; padding:2vw; margin-bottom:5vw}}
