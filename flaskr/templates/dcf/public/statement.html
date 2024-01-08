@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}DCF{% endblock %}
+
+{% block content %}
+{% if ticker == None %}
+    <div>
+        <div class="flex-info">
+            <div id="emoji-info">&#128071</div>
+            <div>Please enter the ticker of company listed in NYSE, NASDAQ or AMEX</div>
+        </div><br>
+        <form action="/dcf/public/statement" method="POST">
+            <input type="text" name="ticker" required="required" onkeyup="this.value = this.value.toUpperCase()"
+            pattern="[A-Za-z]{1,5}" title="One-to-five letter stock code"><br><br>
+            <button class="action" type="submit">Import Data</button>
+        </form>
+    </div>
+
+{% elif ticker == "ERROR" %}
+    <div class="flex-alert">
+        <div id="emoji-alert">&#9888</div>
+        <div>Ticker doesn't exist!</div>
+    </div><br>
+    <div>
+        <textarea readonly id="alert-text">A ticker symbol consists of one-to-five letters, depending upon where the\
+            stocks are traded. Stocks traded on the New York Stock Exchange or American Stock Exchange typically have\
+            between one and three letters, while those traded on NASDAQ may have one-to-five letters.
+        </textarea><br><br>
+        <div class="flex-info">
+            <div id="emoji-info2">&#128071</div>
+            <div>Please enter the ticker of company listed in NYSE, NASDAQ or AMEX</div>
+        </div><br>
+        <form action="/dcf/public/statement" method="POST">
+            <input type="text" name="ticker" required="required" onkeyup="this.value = this.value.toUpperCase();"
+            pattern="[A-Za-z]{1,5}" title="One-to-five letter stock code"><br><br>
+            <button class="action" type="submit">Import Data</button>
+        </form>
+    </div>
+
+{% else %}
+    <div class="flex-menu">
+      <form action="/dcf/public/fcf" method="GET">
+        <button type="submit">Calculate revenue growth</button>
+      </form>
+    </div><br>
+
+    <iframe src="/dcf/public/income-statement" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
+
+    <iframe src="/dcf/public/cash-flow" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
+
+    <iframe src="/dcf/public/balance-sheet" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+{% endif %}
+{% endblock %}

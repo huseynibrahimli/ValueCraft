@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}DCF{% endblock %}
+
+{% block content %}
+{% if growth == None %}
+    <div class="flex-info">
+        <div id="emoji-info">&#128071</div>
+        <div>Please enter long-term growth rate (in decimals)</div>
+    </div><br>
+    <form action="/dcf/public/terminal" method="POST">
+        <input type="number" name="growth" required="required" autofocus min="0"  step="0.0001" value="0.02"><br><br>
+        <button class="action" type="submit">Calculate</button>
+    </form><br>
+
+{% elif growth == "ERROR" %}
+    <div class="flex-alert">
+        <div id="emoji-alert">&#9888</div>
+        <div>Long-term growth rate has to be lower than WACC</div>
+    </div><br>
+    <div class="flex-info">
+        <div id="emoji-info2">&#128071</div>
+        <div>Please enter long-term growth rate (in decimals)</div>
+    </div><br>
+    <form action="/dcf/public/terminal" method="POST">
+        <input type="number" name="growth" required="required" autofocus min="0" step="0.0001" value="0.02"><br><br>
+        <button class="action" type="submit">Calculate</button>
+    </form><br>
+
+{% else %}
+    <div class="flex-menu">
+      <form action="/dcf/public/value" method="GET">
+        <button type="submit">Calculate target value</button>
+      </form>
+    </div><br>
+{% endif %}
+
+<table border="1" class="dataframe_indicator">
+  <tbody>
+    <tr>
+      <th>Market Ticker</th>
+      <td>{{ ticker }}</td>
+    </tr>
+    <tr>
+      <th>Revenue 4-year CAGR</th>
+      <td>{{ revenue_g }}</td>
+    </tr>
+    <tr>
+      <th>WACC</th>
+      <td>{{ wacc }}</td>
+    </tr>
+    <tr>
+      <th>Long-term growth</th>
+      <td>{{ growth }}</td>
+    </tr>
+    <tr>
+      <th>Discounted terminal value</th>
+      <td>{{ tv }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
+

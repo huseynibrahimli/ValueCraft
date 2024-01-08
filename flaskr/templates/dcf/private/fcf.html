@@ -1,0 +1,39 @@
+$def with (revenue_g, fcf)
+
+$if fcf == False:
+    <div class="flex-menu">
+        <form action="/private-fcf" method="POST">
+            <button type="submit">Project free cash flows</button>
+        </form>
+    </div><br>
+    <table border="1" class="dataframe_indicator">
+      <tbody>
+        <tr>
+          <th>Revenue 4-year CAGR</th>
+          <td>$revenue_g</td>
+        </tr>
+        <tr>
+          <th>WACC</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Long-term growth</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Discounted terminal value</th>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+$else:
+    <div class="flex-menu">
+      <form action="/private-wacc" method="GET">
+        <button type="submit" >Calculate cost of capital</button>
+      </form>
+    </div><br>
+
+    <iframe src="/FCF_private" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
+            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"> </iframe>
+

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}BSM{% endblock %}
+
+{% block header %}
+<div class="header">
+    European Option Pricing
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="flex-header">
+  <form action="/" method="POST">
+    <button type="submit" name="app_mode" value="BSM">Black-Scholes-Merton model</button>
+    <button type="submit" name="app_mode" value="MC">Monte Carlo simulation</button>
+  </form>
+</div>
+{% endblock %}
+

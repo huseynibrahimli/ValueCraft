@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}DCF{% endblock %}
+
+{% block content %}
+{% if wacc == None and type == None %}
+    <div class="flex-menu">
+      <form action="/dcf/public/wacc" method="POST">
+        <button type="submit" name="type" value="auto" >Calculate WACC automatically</button>
+        <button type="submit" name="type" value="manual" >Calculate WACC manually</button>
+      </form>
+    </div>
+
+{% elif wacc == None and type == "manual" %}
+    <form action="/dcf/public/wacc" method="POST">
+        <table border="1" class="dataframe_wacc">
+          <thead>
+            <tr>
+              <th>Cost of debt</th>
+              <th>(in decimals)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Risk-free rate</th>
+              <td><input type="number" name="risk_free" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+            </tr>
+            <tr>
+              <th>Credit spread</th>
+              <td><input type="number" name="credit_spread" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+            </tr>
+          </tbody>
+        </table>
+        <table border="1" class="dataframe_wacc">
+          <thead>
+            <tr>
+              <th>Cost of equity</th>
+              <th>(in decimals)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Market return</th>
+              <td><input type="number" name="market_return" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+            </tr>
+            <tr>
+              <th>Company beta</th>
+              <td><input type="number" name="beta" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+            </tr>
+          </tbody>
+        </table>
+        <table border="1" class="dataframe_wacc">
+          <tbody>
+            <tr>
+              <th>Tax rate</th>
+              <td><input type="number" name="tax_rate" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+            </tr>
+            <tr>
+              <th>Equity ratio</th>
+              <td><input type="number" name="equity_ratio" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+            </tr>
+          </tbody>
+        </table><br>
+        <button class="action" type="submit" name="type" value="manual">Calculate</button>
+    </form>
+
+{% else %}
+    <div class="flex-menu">
+        <form action="/dcf/public/terminal" method="GET">
+            <button type="submit">Calculate terminal value</button>
+        </form>
+    </div><br>
+    <table border="1" class="dataframe_indicator">
+      <tbody>
+        <tr>
+          <th>WACC</th>
+          <td>{{ wacc }}</td>
+        </tr>
+        <tr>
+          <th>Risk-free rate</th>
+          <td>{{ risk_free }}</td>
+        </tr>
+        <tr>
+          <th>Credit spread</th>
+          <td>{{ credit_spread }}</td>
+        </tr>
+        <tr>
+          <th>Market return</th>
+          <td>{{ market_return }}</td>
+        </tr>
+        <tr>
+          <th>Company beta</th>
+          <td>{{ beta }}</td>
+        </tr>
+        <tr>
+          <th>Tax rate</th>
+          <td>{{ tax_rate }}</td>
+        </tr>
+        <tr>
+          <th>Equity ratio</th>
+          <td>{{ equity_ratio }}</td>
+        </tr>
+      </tbody>
+    </table>
+{% endif %}
+{% endblock %}
