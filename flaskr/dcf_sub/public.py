@@ -14,18 +14,17 @@ def sp500_list(session_id):
     total_list = requests.get(
         f"https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=200000000000&apikey={api_key}").json()
 
-    company_list = pd.DataFrame(total_list)[
-        ["symbol", "companyName", "exchangeShortName", "industry", "marketCap", "price"]]
-
-    company_list = company_list.set_index("symbol")
-    company_list.columns = ["Company Name", "Exchange", "Industry", "Market Cap", "Price"]
+    company_list = pd.DataFrame(total_list[0:50])
+    company_list = company_list[["symbol", "companyName", "exchangeShortName", "industry", "marketCap", "price"]]
+    company_list.set_index("symbol", inplace=True)
     company_list.index.name = None
-    company_list = company_list.rename_axis("Ticker", axis="columns")
+    company_list.columns = ["Company Name", "Exchange", "Industry", "Market Cap", "Price"]
+    company_list.rename_axis("Ticker", axis="columns", inplace=True)
     exchanges = ["NASDAQ", "NYSE", "AMEX"]
     company_list = company_list[company_list["Exchange"].isin(exchanges)]
     company_list["Market Cap"] = company_list["Market Cap"].apply("{:,.0f}".format)
     company_list["Price"] = company_list["Price"].apply("{:.2f}".format)
-    company_list = company_list.drop(company_list.index[20:])
+    company_list.drop(company_list.index[20:], inplace=True)
     company_list.to_html("flaskr/templates/dcf/temp/SP_" + session_id + ".html", classes='dataframe_sp500')
 
     return company_list
@@ -112,9 +111,9 @@ class Public:
         i = 1
         while i < 6:
             if i == 1:
-                df_is["T+%d" % i] = (df_is["T"]["revenue"] * (1 + revenue_g)) * df_is["%_revenue"]
+                df_is[f"T+{i}"] = (df_is["T"]["revenue"] * (1 + revenue_g)) * df_is["%_revenue"]
             else:
-                df_is["T+%d" % i] = (df_is["T+%d" % (i - 1)]["revenue"] * (1 + revenue_g)) * df_is["%_revenue"]
+                df_is[f"T+{i}"] = (df_is[f"T+{i - 1}"]["revenue"] * (1 + revenue_g)) * df_is["%_revenue"]
             i += 1
 
         df_cf = pd.DataFrame(cash_flow[0:5])
@@ -126,20 +125,20 @@ class Public:
         df_cf = df_cf.astype(float)
         i = 1
         while i < 6:
-            df_cf["T+%d" % i] = df_is["T+%d" % i]["revenue"] * df_cf["%_revenue"]
+            df_cf[f"T+{i}"] = df_is[f"T+{i}"]["revenue"] * df_cf["%_revenue"]
             i += 1
 
         cf_forecast = {}
         i = 1
         while i < 6:
-            t = "T+%d" % i
+            t = f"T+{i}"
             cf_forecast[t] = {}
             cf_forecast[t]["EBITDA(1-Tax rate)"] = df_is[t]["ebitda"] * (1 - tax_rate)
             cf_forecast[t]["Dep(Tax rate)"] = df_cf[t]["depreciationAndAmortization"] * tax_rate
             cf_forecast[t]["WCInv"] = df_cf[t]["changeInWorkingCapital"]
             cf_forecast[t]["FCInv"] = df_cf[t]["capitalExpenditure"]
-            cf_forecast[t]["FCF"] = cf_forecast[t]["EBITDA(1-Tax rate)"] + cf_forecast[t]["Dep(Tax rate)"] + \
-                                    cf_forecast[t]["WCInv"] + cf_forecast[t]["FCInv"]
+            cf_forecast[t]["FCF"] = (cf_forecast[t]["EBITDA(1-Tax rate)"] + cf_forecast[t]["Dep(Tax rate)"] +
+                                     cf_forecast[t]["WCInv"] + cf_forecast[t]["FCInv"])
             i += 1
 
         cf_forecast = pd.DataFrame(cf_forecast)
@@ -181,4 +180,3 @@ class Public:
 
 
 engine = Public(api_key)
-

@@ -3,3 +3,4 @@ setuptools~=68.2.0
 numpy~=1.26.3
 pandas~=2.1.4
 requests~=2.31.0
+scipy~=1.11.4

@@ -18,9 +18,9 @@ class Bond:
 
     def __init__(self, n, price, pmt, fv):
         self.n = n
-        self.ytm_guess = pmt / 100
         self.price = price
         self.pmt = pmt
+        self.ytm_guess = pmt / 100
         self.fv = fv
 
     def bond_price(self, ytm):
@@ -51,17 +51,17 @@ class WACC:
         financial_ratios = requests.get(
             f"https://financialmodelingprep.com/api/v3/ratios/{company}?apikey={self.key}").json()
 
-        interest_coverage_ratio = (income_statement[0]["ebitda"] - income_statement[0]["depreciationAndAmortization"]) \
-                                  / income_statement[0]["interestExpense"]
+        interest_coverage_ratio = ((income_statement[0]["ebitda"] - income_statement[0]["depreciationAndAmortization"])
+                                   / income_statement[0]["interestExpense"])
 
         start = (datetime.datetime.today() - datetime.timedelta(days=400)).strftime("%Y-%m-%d")
         end = datetime.datetime.today().strftime("%Y-%m-%d")
         treasury = web.DataReader("TB1YR", "fred", start, end)
         risk_free = treasury.iloc[-1, 0] / 100
 
-        # https: // pages.stern.nyu.edu / ~adamodar / New_Home_Page / datafile / ratings.html
-        credit_bands = {8.5: 0.0069, 6.5: 0.0085, 5.5: 0.0123, 4.25: 0.0142, 3: 0.0162, 2.5: 0.02, 2.25: 0.0242,
-                        2: 0.0313, 1.75: 0.0455, 1.5: 0.0526, 1.25: 0.0737, 0.8: 0.1157, 0.65: 0.1578, 0.2: 0.175,
+        # https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html
+        credit_bands = {8.5: 0.0059, 6.5: 0.007, 5.5: 0.0092, 4.25: 0.0107, 3: 0.0121, 2.5: 0.0147, 2.25: 0.0174,
+                        2: 0.0221, 1.75: 0.0314, 1.5: 0.0361, 1.25: 0.0524, 0.8: 0.0851, 0.65: 0.1178, 0.2: 0.17,
                         0.19: 0.2}
 
         min_difference = float("inf")
@@ -100,17 +100,17 @@ class WACC:
         total_list = requests.get(f"https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan={low}"
                                   f"&marketCapLowerThan={high}&industry={industry}&limit=100&apikey={self.key}").json()
 
-        company_list = pd.DataFrame(total_list)[
-            ["companyName", "symbol", "exchangeShortName", "industry", "marketCap", "beta"]]
-        company_list = company_list.set_index("companyName")
-        company_list.columns = ["Ticker", "Exchange", "Industry", "Market Cap", "Beta"]
+        company_list = pd.DataFrame(total_list)
+        company_list = company_list[["companyName", "symbol", "exchangeShortName", "industry", "marketCap", "beta"]]
+        company_list.set_index("companyName", inplace=True)
         company_list.index.name = None
-        company_list = company_list.rename_axis("Company Name", axis="columns")
+        company_list.columns = ["Ticker", "Exchange", "Industry", "Market Cap", "Beta"]
+        company_list.rename_axis("Company Name", axis="columns", inplace=True)
         exchanges = ["NASDAQ", "NYSE", "AMEX"]
         company_list = company_list[company_list["Exchange"].isin(exchanges)]
         company_list["Market Cap"] = company_list["Market Cap"].apply("{:,.0f}".format)
         company_list["Beta"] = company_list["Beta"].apply("{:.2f}".format)
-        company_list.to_html("templates/temp/Beta_private_" + company_code + session_id + ".html",
+        company_list.to_html("flaskr/templates/dcf/temp/Beta_private_" + company_code + session_id + ".html",
                              float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 
         return company_list
