@@ -2,7 +2,7 @@ body {background: GhostWhite no-repeat center fixed; background-size:cover}
 * {box-sizing:border-box; font-family:Courier; font-size:1vw}
 
 /*home page*/
-.header {font-family:Arial; font-size:5vw; font-weight:900; color:#006192; text-align:center; line-height:1.2;
+.header {font-family:Arial; font-size:4vw; font-weight:900; color:#006192; text-align:center; line-height:1.2;
          width:100%; margin-bottom:2vw}
 
 .flex-header form {display:flex; justify-content:center; width:100%; margin-bottom:2vw}

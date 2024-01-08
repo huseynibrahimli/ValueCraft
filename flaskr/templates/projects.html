@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block header %}
+<div class="header">
+    Financial valuation and modeling projects
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="flex-header">
+  <form action="/" method="POST">
+    <button type="submit" name="project_type" value="DCF">Equity Valuation</button>
+    <button type="submit" name="project_type" value="BSM">Option Pricing</button>
+    <button type="submit" name="project_type" value="SWP">Swap Valuation</button>
+  </form>
+</div>
+{% endblock %}

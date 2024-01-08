@@ -1,13 +1,14 @@
-$def with (content)
-
 <html lang="en-us">
     <head>
 
         <!-- Title -->
-        <title>Valuate public and private companies using DCF model.</title>
+        <title>{% block title %}{% endblock %} - ValueCraft</title>
+
+        <!--Header-->
+        <header>{% block header %}{% endblock %}</header>
 
         <!-- CSS linkage -->
-        <link rel="stylesheet" type="text/css" href="static/design.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
         <!-- Favicon linkage -->
         <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
@@ -25,8 +26,8 @@ $def with (content)
 
         <!-- Open graph meta tags -->
         <meta property="og:title" content="Discounted Cash Flow Valuation" />
-        <meta property="og:url" content="https://www.dcfvaluation.de/">
-        <meta property="og:image" content="https://www.dcfvaluation.de/static/thumbnail.png">
+        <meta property="og:url" content="https://www.valuecraft.de/">
+        <meta property="og:image" content="https://www.valuecraft.de/static/thumbnail.png">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta property="og:type" content="website">
@@ -50,7 +51,7 @@ $def with (content)
         </script>
 
     </head>
-    <body>$:content</body>
+    <body>{% block content %}{% endblock %}</body>
 </html>
 
 
