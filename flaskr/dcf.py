@@ -66,7 +66,7 @@ def balance_sheet():
 @bp.route("/public/fcf", methods=("GET", "POST"))
 def public_fcf():
     if request.method == "POST":
-        public.engine.project_fcf(session["ticker"], session["user_id"], session["revenue_g"])
+        session["fcf"] = public.engine.project_fcf(session["ticker"], session["user_id"], session["revenue_g"]).to_json()
         return render_template("dcf/public/fcf.html", ticker=session["ticker"],
                                revenue_g="{:.2%}".format(session["revenue_g"]), fcf=True)
 
@@ -158,14 +158,12 @@ def public_value():
     equity_value = "{:,.0f}".format(dcf_value[4])
     n_shares = "{:,.0f}".format(dcf_value[5])
 
-    folder_path = r"templates\temp"
+    folder_path = "flaskr/templates/dcf/temp"
     files = os.listdir(folder_path)
     for file in files:
         if session["user_id"] in file:
             file_path = os.path.join(folder_path, file)
             os.remove(file_path)
-
-    session.clear()
 
     return render_template("dcf/public/value.html", ticker=session["ticker"],
                            wacc="{:.2%}".format(session["wacc"]), g="{:.2%}".format(session["growth"]),

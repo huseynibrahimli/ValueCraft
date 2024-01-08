@@ -149,6 +149,7 @@ class Public:
         return cf_forecast
 
     def calc_tv(self, g, wacc, fcf):
+        fcf = pd.read_json(fcf)
         terminal_value = (fcf["T+5"]["FCF"] * (1 + g)) / (wacc - g)
         terminal_value_discounted = max(round(terminal_value / (1 + wacc) ** 5), 0)
 
@@ -160,6 +161,7 @@ class Public:
         market_info = requests.get(
             f"https://financialmodelingprep.com/api/v3/quote/{company}?apikey={self.key}").json()
 
+        fcf = pd.read_json(fcf)
         fcf_list = fcf.iloc[-1].tolist()
         fcf_list.insert(0, 0)
         npv = npf.npv(wacc, fcf_list)

@@ -5,7 +5,8 @@ from flaskr import db
 from flaskr import dcf, bsm, swp
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_mapping(SECRET_KEY="dev", DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"))
+app.config.from_mapping(SECRET_KEY="c01a9df280f6d5bb42e36781c7738112b942f9d02ce700ac97877c2067ec9f99",
+                        DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"))
 
 try:
     os.makedirs(app.instance_path)
