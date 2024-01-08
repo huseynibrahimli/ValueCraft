@@ -27,14 +27,14 @@ body {background: GhostWhite no-repeat center fixed; background-size:cover}
 .flex-alert div {font-size:1.5vw}
 #emoji-alert {font-size:2.5vw; margin-right:0.5vw}
 #emoji-alert2 {font-size:2.5vw; margin-right:0.5vw}
-#alert-text {text-align:left; padding:1vw; width:80%; height:10vw; white-space:pre-line; font-size:1.5vw; margin-left:1vw}
+#alert-text {text-align:left; padding:0.5vw; width:80%; height:5vw; white-space:pre-line; font-size:1.5vw; margin-left:1vw}
 
 input[name="ticker"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 input[name="growth"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 
 @media screen and (max-width: 1000px) {.flex-info, .flex-alert {width:100%; margin-bottom:5vw}}
 @media screen and (max-width: 1000px) {.flex-info div, .flex-alert div {font-size:5vw}}
-@media screen and (max-width: 1000px) {#alert-text {height:20vw; font-size:5vw; width:100%; height:80vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {#alert-text {font-size:5vw; width:100%; height:40vw; margin-bottom:2vw}}
 @media screen and (max-width: 1000px) {#emoji-info, #emoji-info2, #emoji-info3, #emoji-alert, #emoji-alert2 {font-size:8vw}}
 @media screen and (max-width: 1000px) {input[name="ticker"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
 @media screen and (max-width: 1000px) {input[name="growth"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
