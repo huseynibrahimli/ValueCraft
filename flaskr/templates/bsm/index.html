@@ -4,15 +4,15 @@
 
 {% block header %}
 <div class="header">
-    European Option Pricing
+    European Option Pricing (under development)
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="flex-header">
-  <form action="/" method="POST">
-    <button type="submit" name="app_mode" value="BSM">Black-Scholes-Merton model</button>
-    <button type="submit" name="app_mode" value="MC">Monte Carlo simulation</button>
+  <form action="/">
+    <button type="submit" name="app_mode" value="BSM" onclick="alert('Coming soon!')">Black-Scholes-Merton model</button>
+    <button type="submit" name="app_mode" value="MC" onclick="alert('Coming soon!')">Monte Carlo simulation</button>
   </form>
 </div>
 {% endblock %}
