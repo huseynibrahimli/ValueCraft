@@ -2,7 +2,7 @@ import os
 import secrets
 
 from flask import Blueprint, redirect, render_template, request, session, url_for
-from dcf_sub import public, private, wacc
+from flaskr.dcf_sub import public, private, wacc
 
 
 bp = Blueprint("dcf", __name__, url_prefix="/dcf")
