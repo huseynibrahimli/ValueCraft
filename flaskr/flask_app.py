@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, send_from_directory
 from flaskr import db
 from flaskr import dcf, bsm, swp
 
@@ -34,6 +34,11 @@ def projects():
             return redirect(url_for("swp.index"))
 
     return render_template("projects.html")
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, "static"), "favicon.ico", mimetype="image/vnd.microsoft.icon")
 
 
 if __name__ == "__main__":
