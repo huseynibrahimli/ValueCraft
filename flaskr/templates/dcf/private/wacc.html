@@ -1,15 +1,18 @@
-$def with (type, industry, cap, benchmark, revenue_g, wacc, risk_free, credit_spread, market_return, beta, tax_rate, equity_ratio)
+{% extends "base.html" %}
 
-$if wacc == None and type == None:
+{% block title %}DCF{% endblock %}
+
+{% block content %}
+{% if wacc == None and type == None %}
     <div class="flex-menu">
-      <form action="/private-wacc" method="POST">
+      <form action="/dcf/private/wacc" method="POST">
         <button type="submit" name="type" value="beta" >WACC with beta estimation</button>
         <button type="submit" name="type" value="non_beta" >WACC without beta estimation</button>
       </form>
     </div>
 
-$elif wacc == None and type == "non_beta":
-    <form action="/private-wacc" method="POST">
+{% elif wacc == None and type == "non_beta" %}
+    <form action="/dcf/private/wacc" method="POST">
         <table border="1" class="dataframe_wacc">
           <thead>
             <tr style="text-align: right;">
@@ -61,20 +64,21 @@ $elif wacc == None and type == "non_beta":
         <button class="action" type="submit" name="type" value="non_beta">Calculate</button>
     </form>
 
-$elif wacc == None and type == "beta":
-    $if industry == None:
-        $if cap == None:
+{% elif wacc == None and type == "beta" %}
+    {% if industry == None %}
+        {% if cap == None %}
           <div class="flex-info">
             <div id="emoji-info">&#128071</div>
             <div>Please select comparison criteria</div>
           </div><br>
-        $elif cap != None:
+        {% elif cap != None %}
           <div class="flex-alert">
             <div id="emoji-alert">&#9888</div>
             <div>No information found - please select new comparison criteria</div>
           </div><br>
+        {% endif %}
 
-        <form action="/private-wacc" method="POST">
+        <form action="/dcf/private/wacc" method="POST">
 
           <label><strong>Market cap:</strong></label>
           <select name="cap">
@@ -245,20 +249,21 @@ $elif wacc == None and type == "beta":
           <button class="action" type="submit" name="type" value="beta">Import Data</button>
         </form>
 
-    $elif industry != None:
-        $if beta == None:
-          $if cap == None:
+    {% elif industry != None %}
+        {% if beta == None %}
+          {% if cap == None %}
             <div class="flex-info">
                 <div id="emoji-info2">&#9997</div>
                 <div>Please enter the ticker of benchmark company, effective tax rate and equity ratio of target company</div>
             </div><br>
-          $elif cap != None:
+          {% elif cap != None %}
             <div class="flex-alert">
                 <div id="emoji-alert2">&#9888</div>
                 <div>Missing information - please select another ticker</div>
             </div><br>
+          {% endif %}
 
-          <form action="/private-wacc" method="POST">
+          <form action="/dcf/private/wacc" method="POST">
               <table border="1" class="dataframe_wacc">
                 <tbody>
                   <tr>
@@ -279,12 +284,11 @@ $elif wacc == None and type == "beta":
               <button class="action" type="submit" name="type" value="beta">Calculate Beta</button><br><br>
           </form>
 
-          <iframe src="/Beta" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
+          <iframe src="/dcf/private/beta" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
           onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';">> </iframe>
 
-
-        $elif beta != None:
-            <form action="/private-wacc" method="POST">
+        {% elif beta != None %}
+            <form action="/dcf/private/wacc" method="POST">
                 <table border="1" class="dataframe_wacc">
                   <thead>
                     <tr style="text-align: right;">
@@ -295,7 +299,7 @@ $elif wacc == None and type == "beta":
                   <tbody>
                     <tr>
                       <th>Risk-free rate</th>
-                      <td><input type="number" name="risk_free" value=$risk_free readonly></td>
+                      <td><input type="number" name="risk_free" value={{ risk_free }} readonly></td>
                     </tr>
                     <tr>
                       <th>Credit spread</th>
@@ -314,11 +318,11 @@ $elif wacc == None and type == "beta":
                   <tbody>
                     <tr>
                       <th>Market return</th>
-                      <td><input type="number" name="market_return" value=$market_return readonly></td>
+                      <td><input type="number" name="market_return" value={{ market_return }} readonly></td>
                     </tr>
                     <tr>
                       <th>Company beta</th>
-                      <td><input type="number" name="beta" value=$beta readonly></td>
+                      <td><input type="number" name="beta" value={{ beta }} readonly></td>
                     </tr>
                   </tbody>
                 </table>
@@ -326,19 +330,22 @@ $elif wacc == None and type == "beta":
                   <tbody>
                     <tr>
                       <th>Tax rate</th>
-                      <td><input type="number" name="tax_rate" value=$tax_rate readonly></td>
+                      <td><input type="number" name="tax_rate" value={{ tax_rate }} readonly></td>
                     </tr>
                     <tr>
                       <th>Equity ratio</th>
-                      <td><input type="number" name="equity_ratio" value=$equity_ratio readonly></td>
+                      <td><input type="number" name="equity_ratio" value={{ equity_ratio }} readonly></td>
                     </tr>
                   </tbody>
                 </table><br>
                 <button class="action" type="submit" name="type" value="beta">Calculate</button>
             </form>
-$else:
+        {% endif %}
+    {% endif %}
+
+{% else %}
     <div class="flex-menu">
-        <form action="/private-terminal" method="GET">
+        <form action="/dcf/private/terminal" method="GET">
             <button type="submit">Calculate terminal value</button>
         </form>
     </div><br>
@@ -346,11 +353,11 @@ $else:
       <tbody>
         <tr>
           <th>Revenue 4-year CAGR</th>
-          <td>$revenue_g</td>
+          <td>{{ revenue_g }}</td>
         </tr>
         <tr>
           <th>WACC</th>
-          <td>$wacc</td>
+          <td>{{ wacc }}</td>
         </tr>
         <tr>
           <th>Long-term growth</th>
@@ -362,4 +369,5 @@ $else:
         </tr>
       </tbody>
     </table>
-
+{% endif %}
+{% endblock %}

@@ -1,12 +1,15 @@
-$def with (company_code, my_file)
+{% extends "base.html" %}
 
-$if my_file == None:
+{% block title %}DCF{% endblock %}
+
+{% block content %}
+{% if my_file == None %}
     <div class="flex-info">
         <div id="emoji-info">&#128071</div>
         <div>Please first download and fill in the template</div>
     </div><br>
 
-    <br><a class="action" href="/download" download>Download Template</a>
+    <br><a class="action" href="{{ url_for('dcf.private_download') }}" download="upload_template.xlsx">Download Template</a>
     <br><br><br><br>
 
     <div class="flex-info">
@@ -14,28 +17,31 @@ $if my_file == None:
         <div>Please enter company name and upload the template</div>
     </div><br>
 
-    $if company_code == 'ERROR':
+    {% if company_code == 'ERROR' %}
         <div class="flex-alert">
             <div id="emoji-alert">&#9888</div>
             <div>Template is wrong!</div>
          </div><br>
+    {% endif %}
 
-    <form action="/private-statement" method="POST" enctype="multipart/form-data">
+    <form action="/dcf/private/statement" method="POST" enctype="multipart/form-data">
       <input type="text" name="company_code" required="required" onkeyup="this.value = this.value.toUpperCase()"><br><br>
       <input class="action" type="submit" value="Upload Template">
       <input type="file" name="my_file" required="required"
              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
     </form><br><br>
 
-$else:
+{% else %}
     <div class="flex-menu">
-      <form action="/private-fcf" method="GET">
+      <form action="/dcf/private/fcf" method="GET">
         <button type="submit">Calculate revenue growth</button>
       </form>
     </div><br>
 
-    <iframe src="/IS_private" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
+    <iframe src="/dcf/private/income-statement" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
             onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
 
-    <iframe src="/CF_private" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
+    <iframe src="/dcf/private/cash-flow" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
             onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+{% endif %}
+{% endblock %}

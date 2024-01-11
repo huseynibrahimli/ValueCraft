@@ -5,7 +5,7 @@ import requests
 pd.options.display.float_format = "{:,.0f}".format
 pd.set_option("mode.chained_assignment", None)
 pd.set_option("display.width", 320)
-pd.set_option('display.max_columns', 999)
+pd.set_option("display.max_columns", 999)
 
 api_key = "24cb7ed8e2f85f03a04132535646cc5f"
 
@@ -25,7 +25,7 @@ def sp500_list(session_id):
     company_list["Market Cap"] = company_list["Market Cap"].apply("{:,.0f}".format)
     company_list["Price"] = company_list["Price"].apply("{:.2f}".format)
     company_list.drop(company_list.index[20:], inplace=True)
-    company_list.to_html("flaskr/templates/dcf/temp/SP_" + session_id + ".html", classes='dataframe_sp500')
+    company_list.to_html("flaskr/templates/dcf/temp/SP_" + session_id + ".html", classes="dataframe_sp500")
 
     return company_list
 

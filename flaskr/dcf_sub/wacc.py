@@ -9,33 +9,9 @@ from scipy.optimize import newton
 pd.options.display.float_format = "{:,.4f}".format
 pd.set_option("mode.chained_assignment", None)
 pd.set_option("display.width", 320)
-pd.set_option('display.max_columns', 999)
+pd.set_option("display.max_columns", 999)
 
 api_key = "24cb7ed8e2f85f03a04132535646cc5f"
-
-
-class Bond:
-
-    def __init__(self, n, price, pmt, fv):
-        self.n = n
-        self.price = price
-        self.pmt = pmt
-        self.ytm_guess = pmt / 100
-        self.fv = fv
-
-    def bond_price(self, ytm):
-        coupon_payments = np.full(self.n, self.pmt)
-        cash_flow = coupon_payments.tolist()
-        cash_flow[-1] = cash_flow[-1] + self.fv
-        cash_flow.insert(0, 0)
-        present_value = npf.npv(ytm, cash_flow)
-
-        return present_value - self.price
-
-    def ytm_newton(self):
-        ytm_estimated = newton(self.bond_price, self.ytm_guess)
-
-        return ytm_estimated
 
 
 class WACC:
