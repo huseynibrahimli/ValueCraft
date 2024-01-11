@@ -14,6 +14,12 @@ def sp500_list(session_id):
     total_list = requests.get(
         f"https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=200000000000&apikey={api_key}").json()
 
+    sp_list = requests.get(f"https://financialmodelingprep.com/api/v3/sp500_constituent?apikey={api_key}").json()
+
+    included_companies = pd.DataFrame(sp_list)
+    included_companies = included_companies["symbol"]
+    included_companies = included_companies.to_list()
+
     company_list = pd.DataFrame(total_list[0:50])
     company_list = company_list[["symbol", "companyName", "exchangeShortName", "industry", "marketCap", "price"]]
     company_list.set_index("symbol", inplace=True)
@@ -22,13 +28,13 @@ def sp500_list(session_id):
     company_list.rename_axis("Ticker", axis="columns", inplace=True)
     exchanges = ["NASDAQ", "NYSE", "AMEX"]
     company_list = company_list[company_list["Exchange"].isin(exchanges)]
+    company_list = company_list[company_list.index.isin(included_companies)]
     company_list["Market Cap"] = company_list["Market Cap"].apply("{:,.0f}".format)
     company_list["Price"] = company_list["Price"].apply("{:.2f}".format)
     company_list.drop(company_list.index[20:], inplace=True)
     company_list.to_html("flaskr/templates/dcf/temp/SP_" + session_id + ".html", classes="dataframe_sp500")
 
     return company_list
-
 
 class Public:
 
