@@ -1,6 +1,6 @@
-# Discounted Cash Flow Valuation
+# Financial valuation and modeling projects
 
-This is a web project written in Python to valuate public and private companies using DCF methodology. 
+This is a web project developed in Python using Flask to perform financial valuation and modeling. 
 
 ## Table of Contents
 
@@ -11,23 +11,30 @@ This is a web project written in Python to valuate public and private companies 
 
 ## Project Description
 
-Main purpose of this project is to perform equity valuation using Discounted Cash Flow methodology. You can calculate 
-cost of debt and cost of equity and estimate beta for private companies.
+Financial valuation and modeling projects - equity valuation using Discounted Cash Flow method, option pricing using 
+Black-Scholes-Merton model and Monte Carlo simulation, interest rate swaps pricing and valuation.
 
 ## Technologies Used
 
 - Python
+- Flask
 - HTML
 - CSS
 
 ## Installation
 
-1. Clone the repository: git clone https://github.com/your-username/your-project.git
+1. Clone the repository: git clone https://github.com/huseynibrahimli/ValueCraft.git
 2. Install the dependencies: pip install -r requirements.txt
 3. Run the application: python flaskr/flask_app.py
 
 ## Usage
 
-You can start entering stock ticker in the input field to select the respective public company that you want to valuate. 
-It is very important to enter necessary inputs to calculate weigthed cost of captial, estimate future revenue 
-growth and calculate equity value.
+* Equity Valuation
+  * Public company valuation
+  * Private company valuation
+* Option Pricing
+  * Black-Scholes-Merton model
+  * Monte Carlo simulation
+* Swap Valuation
+  * Overnight Indexed Swap (OIS)
+  * Interest Rate Swap (IRS)
