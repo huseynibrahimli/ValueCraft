@@ -31,6 +31,8 @@ body {background: GhostWhite no-repeat center fixed; background-size:cover}
 
 input[name="ticker"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 input[name="growth"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
+label[for="company_type"]  {font-weight:bold; margin-left:1vw}
+#company_type {}
 
 @media screen and (max-width: 1000px) {.flex-info, .flex-alert {width:100%; margin-bottom:5vw}}
 @media screen and (max-width: 1000px) {.flex-info div, .flex-alert div {font-size:5vw}}
@@ -38,6 +40,8 @@ input[name="growth"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 @media screen and (max-width: 1000px) {#emoji-info, #emoji-info2, #emoji-info3, #emoji-alert, #emoji-alert2 {font-size:8vw}}
 @media screen and (max-width: 1000px) {input[name="ticker"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
 @media screen and (max-width: 1000px) {input[name="growth"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {label[for="company_type"] {font-size:5vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {#company_type {transform:scale(2); margin-left:2vw; margin-bottom:5vw}}
 
 /*private specific items*/
 input[name="company_code"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}

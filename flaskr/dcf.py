@@ -35,6 +35,7 @@ def sp500():
 def public_statement():
     if request.method == "POST":
         session["ticker"] = request.form["ticker"]
+        session["company_type"] = request.form.get("company_type")
         try:
             public.engine.import_data(session["ticker"], session["user_id"])
         except Exception as e:
@@ -152,7 +153,7 @@ def public_terminal():
 
 @bp.route("/public/value", methods=("GET", "POST"))
 def public_value():
-    dcf_value = public.engine.calc_dcf(session["ticker"], session["wacc"], session["fcf"], session["tv_discounted"])
+    dcf_value = public.engine.calc_dcf(session["ticker"], session["wacc"], session["fcf"], session["tv_discounted"], session["company_type"])
     target_price = "{:,.2f}".format(dcf_value[0])
     market_price = "{:,.2f}".format(dcf_value[1])
     firm_value = "{:,.0f}".format(dcf_value[2])

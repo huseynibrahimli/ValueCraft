@@ -1,10 +1,7 @@
 import datetime
-import numpy as np
-import numpy_financial as npf
 import pandas as pd
 import pandas_datareader.data as web
 import requests
-from scipy.optimize import newton
 
 pd.options.display.float_format = "{:,.4f}".format
 pd.set_option("mode.chained_assignment", None)
@@ -30,11 +27,6 @@ class WACC:
         interest_coverage_ratio = ((income_statement[0]["ebitda"] - income_statement[0]["depreciationAndAmortization"])
                                    / income_statement[0]["interestExpense"])
 
-        start = (datetime.datetime.today() - datetime.timedelta(days=400)).strftime("%Y-%m-%d")
-        end = datetime.datetime.today().strftime("%Y-%m-%d")
-        treasury = web.DataReader("TB1YR", "fred", start, end)
-        risk_free = treasury.iloc[-1, 0] / 100
-
         # https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html
         credit_bands = {8.5: 0.0059, 6.5: 0.007, 5.5: 0.0092, 4.25: 0.0107, 3: 0.0121, 2.5: 0.0147, 2.25: 0.0174,
                         2: 0.0221, 1.75: 0.0314, 1.5: 0.0361, 1.25: 0.0524, 0.8: 0.0851, 0.65: 0.1178, 0.2: 0.17,
@@ -49,12 +41,14 @@ class WACC:
                 closest_key = key
 
         credit_spread = credit_bands[closest_key]
+        start = (datetime.datetime.today() - datetime.timedelta(days=10))
+        end = datetime.datetime.now()
+        sofr = web.DataReader("SOFR", "fred", start, end)
+        risk_free = sofr.iloc[-1, 0] / 100
         cost_of_debt = risk_free + credit_spread
 
         beta = company_profile[0]["beta"]
-        sp500 = web.DataReader(["sp500"], "fred", start, end)
-        sp500.dropna(inplace=True)
-        sp500_return = (sp500.iloc[-1, 0] / sp500.iloc[-252, 0]) - 1
+        sp500_return = 0.1190
         cost_of_equity = risk_free + (beta * (sp500_return - risk_free))
 
         tax_rate = financial_ratios[0]["effectiveTaxRate"]

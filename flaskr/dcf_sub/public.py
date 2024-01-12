@@ -33,6 +33,7 @@ def sp500_list(session_id):
 
     return company_list
 
+
 class Public:
 
     def __init__(self, key):
@@ -158,7 +159,7 @@ class Public:
 
         return terminal_value_discounted
 
-    def calc_dcf(self, company, wacc, fcf, tv):
+    def calc_dcf(self, company, wacc, fcf, tv, company_type):
         balance_sheet = requests.get(
             f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company}?apikey={self.key}").json()
         market_info = requests.get(
@@ -171,12 +172,19 @@ class Public:
         firm_value = tv + npv
         debt = balance_sheet[0]["totalDebt"]
 
-        if firm_value > 0:
-            equity_value = max(firm_value - debt, 0)
+        if company_type == "bank":
+            if firm_value > 0:
+                equity_value = firm_value
+            else:
+                firm_value = debt
+                equity_value = firm_value
         else:
-            equity_value = 0
+            if firm_value > 0:
+                equity_value = max(firm_value - debt, 0)
+            else:
+                equity_value = 0
+            firm_value = equity_value + debt
 
-        firm_value = equity_value + debt
         number_of_shares = market_info[0]["sharesOutstanding"]
         actual_price_per_share = market_info[0]["price"]
         target_price_per_share = equity_value / number_of_shares
