@@ -101,7 +101,7 @@ def public_wacc():
                                    beta=beta, tax_rate=tax_rate, equity_ratio=equity_ratio)
 
         elif wacc_type == "manual":
-            risk_free = request.form["risk_free"]
+            risk_free = request.form.get("risk_free")
             if risk_free is None:
                 return render_template("dcf/public/wacc.html", wacc=None, type=wacc_type, risk_free=None,
                                        credit_spread=None, market_return=None, beta=None, tax_rate=None, equity_ratio=None)
