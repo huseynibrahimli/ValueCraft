@@ -41,5 +41,10 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, "static"), "favicon/favicon.ico", mimetype="image/vnd.microsoft.icon")
 
 
+@app.route("/apple-touch-icon.png")
+def apple_touch_icon():
+    return send_from_directory(os.path.join(app.root_path, "static"), "favicon/apple-touch-icon.png", mimetype="image/vnd.microsoft.icon")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
