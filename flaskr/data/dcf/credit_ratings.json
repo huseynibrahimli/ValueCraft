@@ -1,0 +1,1172 @@
+[
+  {
+    "Symbol": "AMZN",
+    "SP Rating": "AA",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "BRK.B",
+    "SP Rating": "AA",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "WMT",
+    "SP Rating": "AA",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "V",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "PG",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "XOM",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "CSCO",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "ACN",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "CVX",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "NKE",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "BLK",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "ADP",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "CME",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "CL",
+    "SP Rating": "AA-",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "AAPL",
+    "SP Rating": "AA+",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "GOOGL",
+    "SP Rating": "AA+",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "GOOG",
+    "SP Rating": "AA+",
+    "Spread": 0.007
+  },
+  {
+    "Symbol": "UNH",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "MA",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "ADBE",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "CRM",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "PFE",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "PEP",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "ABT",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "COST",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "KO",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "MRK",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "LLY",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "INTC",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "TXN",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "BMY",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "MMM",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "USB",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "EL",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "ITW",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "CMI",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "PCAR",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "NTRS",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "GWW",
+    "SP Rating": "A+",
+    "Spread": 0.0092
+  },
+  {
+    "Symbol": "HD",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "LIN",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "MDT",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "HON",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "PM",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "AMAT",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "TGT",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "SCHW",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "CAT",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "ANTM",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "DE",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "TJX",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "APD",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "EMR",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "PGR",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "PSA",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "BK",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "KMB",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "PRU",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "TRV",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "ROK",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "ADM",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "STT",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "AWK",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "SWK",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "HSY",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "HRL",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "L",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "BEN",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "GL",
+    "SP Rating": "A",
+    "Spread": 0.0107
+  },
+  {
+    "Symbol": "NVDA",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "JPM",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "BAC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "CMCSA",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "PYPL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "QCOM",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "NEE",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "INTU",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "UNP",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "UPS",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "RTX",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "NOW",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "AMGN",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "PLD",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "IBM",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "BKNG",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "COP",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ADI",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "SYK",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "PNC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "LRCX",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "TFC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "MMC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "LMT",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "CI",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ETN",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "AON",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "WM",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ECL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "EOG",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "SPG",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "TEL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ATVI",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "GD",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "MET",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "AEP",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "BIIB",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "BAX",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "O",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "FRC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "CTAS",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "CTVA",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "XEL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "AMP",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "AFL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ALL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "AVB",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "NUE",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "EQR",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ES",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "WEC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ED",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "VFC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "PPL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "CLX",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "BKR",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "PFG",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "EVRG",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "LNT",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "CBOE",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "BF.B",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "LNC",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "ATO",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "SNA",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "RE",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "FRT",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "RL",
+    "SP Rating": "A-",
+    "Spread": 0.0121
+  },
+  {
+    "Symbol": "DIS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "TMO",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "VZ",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "WFC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ABBV",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DHR",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MCD",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "LOW",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ORCL",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "C",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "GS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "SBUX",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "GE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "AXP",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "GILD",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CSX",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DUK",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ICE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "NSC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "SO",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "REGN",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MCO",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "KLAC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "D",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "HUM",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "NOC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "JCI",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "EXC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ROP",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "AIG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "APH",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CDNS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "A",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "EBAY",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "FTNT",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ROST",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PH",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DD",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "EA",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "SRE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PPG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "WELL",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CBRE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MCK",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PSX",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "AME",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PEG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "FITB",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "BBY",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "GLW",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ARE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "RSG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "VMC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MLM",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "HIG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DOV",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "TSN",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "HBAN",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MAA",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "RF",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "KEY",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ESS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CHD",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DTE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "AEE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DRE",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "HAL",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ETR",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "BR",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "VTR",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "NTAP",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CFG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MTB",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ABC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CINF",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "RJF",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PEAK",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CMS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "DGX",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "NVR",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "BXP",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "JBHT",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CNP",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "UDR",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "OMC",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "FBHS",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "KIM",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CHRW",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "CMA",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "WRB",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "REG",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "ZION",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "NI",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "MHK",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "IVZ",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PBCT",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  },
+  {
+    "Symbol": "PNW",
+    "SP Rating": "BBB+",
+    "Spread": 0.0147
+  }
+]
