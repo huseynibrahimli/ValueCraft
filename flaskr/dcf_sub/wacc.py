@@ -2,6 +2,8 @@ import datetime
 import pandas as pd
 import pandas_datareader.data as web
 import requests
+import json
+
 
 pd.options.display.float_format = "{:,.4f}".format
 pd.set_option("mode.chained_assignment", None)
@@ -27,20 +29,29 @@ class WACC:
         interest_coverage_ratio = ((income_statement[0]["ebitda"] - income_statement[0]["depreciationAndAmortization"])
                                    / income_statement[0]["interestExpense"])
 
-        # https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html
-        credit_bands = {8.5: 0.0059, 6.5: 0.007, 5.5: 0.0092, 4.25: 0.0107, 3: 0.0121, 2.5: 0.0147, 2.25: 0.0174,
-                        2: 0.0221, 1.75: 0.0314, 1.5: 0.0361, 1.25: 0.0524, 0.8: 0.0851, 0.65: 0.1178, 0.2: 0.17,
-                        0.19: 0.2}
+        credit_ratings = pd.read_json("flaskr/data/dcf/credit_ratings.json")
+        credit_ratings.set_index("Symbol", inplace=True)
+        credit_ratings.index.name = None
+        credit_ratings.rename_axis("Ticker", axis="columns", inplace=True)
 
-        min_difference = float("inf")
+        credit_spread = credit_ratings.loc[company, "Spread"]
 
-        for key in credit_bands.keys():
-            difference = abs(key - interest_coverage_ratio)
-            if difference < min_difference:
-                min_difference = difference
-                closest_key = key
+        if credit_spread is None:
+            # https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html
+            credit_bands = {8.5: 0.0059, 6.5: 0.007, 5.5: 0.0092, 4.25: 0.0107, 3: 0.0121, 2.5: 0.0147, 2.25: 0.0174,
+                            2: 0.0221, 1.75: 0.0314, 1.5: 0.0361, 1.25: 0.0524, 0.8: 0.0851, 0.65: 0.1178, 0.2: 0.17,
+                            0.19: 0.2}
 
-        credit_spread = credit_bands[closest_key]
+            min_difference = float("inf")
+
+            for key in credit_bands.keys():
+                difference = abs(key - interest_coverage_ratio)
+                if difference < min_difference:
+                    min_difference = difference
+                    closest_key = key
+
+            credit_spread = credit_bands[closest_key]
+
         start = (datetime.datetime.today() - datetime.timedelta(days=10))
         end = datetime.datetime.now()
         sofr = web.DataReader("SOFR", "fred", start, end)

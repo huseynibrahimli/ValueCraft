@@ -90,8 +90,11 @@ class Private:
 
     def calc_tv(self, g, wacc, fcf):
         fcf = pd.read_json(fcf)
-        terminal_value = (fcf["T+5"]["FCF"] * (1 + g)) / (wacc - g)
-        terminal_value_discounted = max(round(terminal_value / (1 + wacc) ** 5), 0)
+        if fcf["T+5"]["FCF"] > 0:
+            terminal_value = (fcf["T+5"]["FCF"] * (1 + g)) / (wacc - g)
+            terminal_value_discounted = max(round(terminal_value / (1 + wacc) ** 5), 0)
+        else:
+            terminal_value_discounted = 0
 
         return terminal_value_discounted
 
