@@ -58,5 +58,10 @@ def handle_internal_server_error(error):
     return render_template("projects.html")
 
 
+@app.errorhandler(KeyError)
+def handle_key_error(error):
+    return render_template("projects.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
