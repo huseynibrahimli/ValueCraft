@@ -8,14 +8,8 @@
         <priority>1.0</priority>
         <lastmod>2024-01-11</lastmod>
     </url>
-
-    <!-- DCF Pages -->
     <url>
         <loc>https://www.valuecraft.de/dcf/</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/sp500</loc>
         <lastmod>2024-01-11</lastmod>
     </url>
     <url>
@@ -23,75 +17,7 @@
         <lastmod>2024-01-11</lastmod>
     </url>
     <url>
-        <loc>https://www.valuecraft.de/dcf/public/income-statement</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/cash-flow</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/balance-sheet</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/fcf</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/fcf-statement</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/wacc</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/terminal</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/public/value</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
         <loc>https://www.valuecraft.de/dcf/private/statement</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/download</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/income-statement</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/cash-flow</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/fcf</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/fcf-statement</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/wacc</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/beta</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/terminal</loc>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-    <url>
-        <loc>https://www.valuecraft.de/dcf/private/value</loc>
         <lastmod>2024-01-11</lastmod>
     </url>
     <url>
@@ -102,11 +28,4 @@
         <loc>https://www.valuecraft.de/swp/</loc>
         <lastmod>2024-01-11</lastmod>
     </url>
-    <url>
-        <loc>https://www.valuecraft.de/favicon.ico</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-        <lastmod>2024-01-11</lastmod>
-    </url>
-
 </urlset>
