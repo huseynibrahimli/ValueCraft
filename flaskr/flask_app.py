@@ -3,6 +3,8 @@ import os
 from flask import Flask, redirect, render_template, request, url_for, send_from_directory
 from flaskr import db
 from flaskr import dcf, bsm, swp
+from werkzeug.exceptions import InternalServerError
+
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_mapping(SECRET_KEY="c01a9df280f6d5bb42e36781c7738112b942f9d02ce700ac97877c2067ec9f99",
@@ -48,6 +50,11 @@ def apple_touch_icon():
 
 @app.errorhandler(Exception)
 def handle_error(error):
+    return render_template("projects.html")
+
+
+@app.errorhandler(InternalServerError)
+def handle_internal_server_error(error):
     return render_template("projects.html")
 
 
