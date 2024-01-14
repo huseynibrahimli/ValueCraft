@@ -65,6 +65,9 @@ class WACC:
         cost_of_equity = risk_free + (beta * equity_risk_premium)
 
         tax_rate = financial_ratios[0]["effectiveTaxRate"]
+        if tax_rate < 0:
+            tax_rate = 0
+
         debt_to_equity = financial_ratios[0]["debtEquityRatio"]
         debt_ratio = debt_to_equity / (debt_to_equity + 1)
         equity_ratio = max(1 - debt_ratio, 0)
@@ -116,7 +119,11 @@ class WACC:
             equity_risk_premium = 0.0457
 
             reference_levered_beta = beta[0]["beta"]
+
             reference_tax_rate = financial_ratios[0]["effectiveTaxRate"]
+            if reference_tax_rate < 0:
+                reference_tax_rate = 0
+
             reference_debt_to_equity = financial_ratios[0]["debtEquityRatio"]
             actual_debt_to_equity = (1 - equity_ratio) / equity_ratio
             unlevered_beta = reference_levered_beta / (1 + (1 - reference_tax_rate) * reference_debt_to_equity)
