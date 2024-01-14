@@ -2,7 +2,6 @@ import datetime
 import pandas as pd
 import pandas_datareader.data as web
 import requests
-import json
 
 
 pd.options.display.float_format = "{:,.4f}".format
@@ -54,13 +53,16 @@ class WACC:
 
         start = (datetime.datetime.today() - datetime.timedelta(days=10))
         end = datetime.datetime.now()
-        sofr = web.DataReader("SOFR", "fred", start, end)
-        risk_free = sofr.iloc[-1, 0] / 100
+        treasury_10Y = web.DataReader("DGS10", "fred", start, end)
+        risk_free = treasury_10Y.iloc[-1, 0] / 100
         cost_of_debt = risk_free + credit_spread
 
         beta = company_profile[0]["beta"]
-        sp500_return = 0.1190
-        cost_of_equity = risk_free + (beta * (sp500_return - risk_free))
+
+        # https://pages.stern.nyu.edu/~adamodar/
+        equity_risk_premium = 0.0457
+
+        cost_of_equity = risk_free + (beta * equity_risk_premium)
 
         tax_rate = financial_ratios[0]["effectiveTaxRate"]
         debt_to_equity = financial_ratios[0]["debtEquityRatio"]
@@ -68,7 +70,7 @@ class WACC:
         equity_ratio = max(1 - debt_ratio, 0)
         wacc = (cost_of_debt * (1 - tax_rate) * debt_ratio) + (cost_of_equity * equity_ratio)
 
-        return wacc, risk_free, credit_spread, sp500_return, beta, tax_rate, equity_ratio
+        return wacc, risk_free, credit_spread, equity_risk_premium, beta, tax_rate, equity_ratio
 
     def estimate_beta(self, industry, cap, company_code, session_id):
         if cap == "small":
@@ -105,13 +107,13 @@ class WACC:
         if not beta or not financial_ratios:
             return "na"
         else:
-            start = (datetime.datetime.today() - datetime.timedelta(days=400)).strftime("%Y-%m-%d")
-            end = datetime.datetime.today().strftime("%Y-%m-%d")
-            treasury = web.DataReader("TB1YR", "fred", start, end)
-            risk_free = treasury.iloc[-1, 0] / 100
-            sp500 = web.DataReader(["sp500"], "fred", start, end)
-            sp500.dropna(inplace=True)
-            sp500_return = (sp500.iloc[-1, 0] / sp500.iloc[-252, 0]) - 1
+            start = (datetime.datetime.today() - datetime.timedelta(days=10))
+            end = datetime.datetime.now()
+            treasury_10Y = web.DataReader("DGS10", "fred", start, end)
+            risk_free = treasury_10Y.iloc[-1, 0] / 100
+
+            # https://pages.stern.nyu.edu/~adamodar/
+            equity_risk_premium = 0.0457
 
             reference_levered_beta = beta[0]["beta"]
             reference_tax_rate = financial_ratios[0]["effectiveTaxRate"]
@@ -121,7 +123,7 @@ class WACC:
             actual_levered_beta = unlevered_beta * (1 + (1 - tax_rate) * actual_debt_to_equity)
 
             if actual_levered_beta > 0:
-                return actual_levered_beta, risk_free, sp500_return
+                return actual_levered_beta, risk_free, equity_risk_premium
             else:
                 return "na"
 

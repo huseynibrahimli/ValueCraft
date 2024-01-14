@@ -1,5 +1,7 @@
+import datetime
 import numpy_financial as npf
 import pandas as pd
+import pandas_datareader.data as web
 import requests
 
 pd.options.display.float_format = "{:,.0f}".format
@@ -95,7 +97,7 @@ class Public:
 
         return revenue_g
 
-    def project_fcf(self, company, session_id, revenue_g):
+    def project_fcf(self, company, session_id, revenue_g, company_type):
         income_statement = requests.get(
             f"https://financialmodelingprep.com/api/v3/income-statement/{company}?apikey={self.key}").json()
         cash_flow = requests.get(
@@ -132,25 +134,46 @@ class Public:
             df_cf[f"T+{i}"] = df_is[f"T+{i}"]["revenue"] * df_cf["%_revenue"]
             i += 1
 
-        cf_forecast = {}
-        i = 1
-        while i < 6:
-            t = f"T+{i}"
-            cf_forecast[t] = {}
-            cf_forecast[t]["EBITDA(1-Tax rate)"] = df_is[t]["ebitda"] * (1 - tax_rate)
-            cf_forecast[t]["Dep(Tax rate)"] = df_cf[t]["depreciationAndAmortization"] * tax_rate
-            cf_forecast[t]["WCInv"] = df_cf[t]["changeInWorkingCapital"]
-            cf_forecast[t]["FCInv"] = df_cf[t]["capitalExpenditure"]
-            cf_forecast[t]["FCF"] = (cf_forecast[t]["EBITDA(1-Tax rate)"] + cf_forecast[t]["Dep(Tax rate)"] +
-                                     cf_forecast[t]["WCInv"] + cf_forecast[t]["FCInv"])
-            i += 1
+        if company_type == "bank":
+            cf_forecast = {}
+            i = 1
+            while i < 6:
+                t = f"T+{i}"
+                cf_forecast[t] = {}
+                cf_forecast[t]["EBITDA(1-Tax rate)"] = df_is[t]["ebitda"] * (1 - tax_rate)
+                cf_forecast[t]["Dep(Tax rate)"] = df_cf[t]["depreciationAndAmortization"] * tax_rate
+                cf_forecast[t]["WCInv"] = df_cf[t]["changeInWorkingCapital"]
+                cf_forecast[t]["FCInv"] = df_cf[t]["capitalExpenditure"]
+                cf_forecast[t]["FCF"] = (cf_forecast[t]["EBITDA(1-Tax rate)"] + cf_forecast[t]["Dep(Tax rate)"] +
+                                         cf_forecast[t]["WCInv"] + cf_forecast[t]["FCInv"])
+                i += 1
 
-        cf_forecast = pd.DataFrame(cf_forecast)
-        cf_forecast = cf_forecast.astype(float)
-        cf_forecast.to_html("flaskr/templates/dcf/temp/FCF_" + company + session_id + ".html",
-                            float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
+            cf_forecast = pd.DataFrame(cf_forecast)
+            cf_forecast = cf_forecast.astype(float)
+            cf_forecast.to_html("flaskr/templates/dcf/temp/FCF_" + company + session_id + ".html",
+                                float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 
-        return cf_forecast
+            return cf_forecast
+        else:
+            cf_forecast = {}
+            i = 1
+            while i < 6:
+                t = f"T+{i}"
+                cf_forecast[t] = {}
+                cf_forecast[t]["EBITDA(1-Tax rate)"] = df_is[t]["ebitda"] * (1 - tax_rate)
+                cf_forecast[t]["Dep(Tax rate)"] = df_cf[t]["depreciationAndAmortization"] * tax_rate
+                cf_forecast[t]["WCInv"] = df_cf[t]["changeInWorkingCapital"]
+                cf_forecast[t]["FCInv"] = df_cf[t]["capitalExpenditure"]
+                cf_forecast[t]["FCF"] = (cf_forecast[t]["EBITDA(1-Tax rate)"] + cf_forecast[t]["Dep(Tax rate)"] +
+                                         cf_forecast[t]["WCInv"] + cf_forecast[t]["FCInv"])
+                i += 1
+
+            cf_forecast = pd.DataFrame(cf_forecast)
+            cf_forecast = cf_forecast.astype(float)
+            cf_forecast.to_html("flaskr/templates/dcf/temp/FCF_" + company + session_id + ".html",
+                                float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
+
+            return cf_forecast
 
     def calc_tv(self, g, wacc, fcf):
         fcf = pd.read_json(fcf)
@@ -196,3 +219,6 @@ class Public:
 
 
 engine = Public(api_key)
+
+
+# print(engine.project_fcf("AAPL", "armud", 0.05, "bank"))
