@@ -106,6 +106,8 @@ class Public:
             f"https://financialmodelingprep.com/api/v3/ratios/{company}?apikey={self.key}").json()
 
         tax_rate = financial_ratios[0]["effectiveTaxRate"]
+        if tax_rate < 0:
+            tax_rate = 0
 
         df_is = pd.DataFrame(income_statement[0:5])
         df_is = df_is.transpose()

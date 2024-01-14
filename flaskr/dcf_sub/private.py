@@ -58,6 +58,8 @@ class Private:
             i += 1
 
         tax_rate = df_is["T-Average"]["incomeTaxExpense"] / df_is["T-Average"]["incomeBeforeTax"]
+        if tax_rate < 0:
+            tax_rate = 0
 
         df_cf = df_cf.astype(float)
         df_cf["T-Average"] = df_cf.mean(axis=1)
