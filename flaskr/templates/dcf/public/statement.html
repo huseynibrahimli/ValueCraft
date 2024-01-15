@@ -34,6 +34,8 @@
         <form action="/dcf/public/statement" method="POST">
             <input type="text" name="ticker" required="required" onkeyup="this.value = this.value.toUpperCase();"
             pattern="[A-Za-z]{1,5}" title="One-to-five letter stock code"><br><br>
+            <label for="company_type">Please tick the box if bank</label>
+            <input type="checkbox" id="company_type" name="company_type" value="bank"><br><br>
             <button class="action" type="submit">Import Data</button>
         </form>
     </div>
