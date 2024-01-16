@@ -4,11 +4,25 @@
 
 {% block content %}
 {% if fcf == False %}
-    <div class="flex-menu">
-        <form action="/dcf/public/fcf" method="POST">
-            <button type="submit">Project free cash flows</button>
-        </form>
+    <div class="flex-info">
+        <div id="emoji-info">&#128071</div>
+        <div>Please enter projection period and the year when revenue growth rate will start to converge to perpetuity level that is assumed to be risk-free rate</div>
     </div><br>
+    <form action="/dcf/public/fcf" method="POST">
+        <table border="1" class="dataframe_wacc">
+          <tbody>
+            <tr>
+              <th>Projection period (years)</th>
+              <td><input type="number" name="projection_period" required="required" autofocus min="1" step="1" value="10"></td>
+            </tr>
+            <tr>
+              <th>Revenue growth change year</th>
+              <td><input type="number" name="revenue_g_year" required="required" min="2" step="1" value="6"></td>
+            </tr>
+          </tbody>
+        </table><br>
+        <button class="action" type="submit">Calculate</button>
+    </form><br>
 
     <table border="1" class="dataframe_indicator">
       <tbody>
@@ -17,7 +31,7 @@
           <td>{{ ticker }}</td>
         </tr>
         <tr>
-          <th>Revenue 4-year CAGR</th>
+          <th>Revenue CAGR</th>
           <td>{{ revenue_g }}</td>
         </tr>
         <tr>
@@ -25,7 +39,7 @@
           <td></td>
         </tr>
         <tr>
-          <th>Long-term growth</th>
+          <th>Perpetuity growth</th>
           <td></td>
         </tr>
         <tr>
@@ -42,7 +56,7 @@
       </form>
     </div><br>
 
-    <iframe src="/dcf/public/fcf-statement" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+    <iframe src="/dcf/public/fcf-statement" width="100%" height="50%" style="border:none" sandbox="allow-same-origin"
             onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
 {% endif %}
 {% endblock %}

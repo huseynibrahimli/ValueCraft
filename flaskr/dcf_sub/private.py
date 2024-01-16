@@ -18,14 +18,14 @@ class Private:
         df_is.index.name = None
         df_is = df_is.rename_axis("Income Statement", axis="columns")
         df_is = df_is.astype(float)
-        df_is = df_is.iloc[:, 0:6].applymap("{:,.0f}".format)
+        df_is = df_is.iloc[:, 0:6].map("{:,.0f}".format)
         df_is.to_html("flaskr/templates/dcf/temp/IS_private_" + company_code + session_id + ".html",
                       float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 
         df_cf.index.name = None
         df_cf = df_cf.rename_axis("Cash Flow Statement", axis="columns")
         df_cf = df_cf.astype(float)
-        df_cf = df_cf.iloc[:, 0:6].applymap("{:,.0f}".format)
+        df_cf = df_cf.iloc[:, 0:6].map("{:,.0f}".format)
         df_cf.to_html("flaskr/templates/dcf/temp/CF_private_" + company_code + session_id + ".html",
                       float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 
@@ -100,7 +100,7 @@ class Private:
 
         return terminal_value_discounted
 
-    def calc_dcf(self, wacc, fcf, tv, debt):
+    def calc_dcf(self, wacc, fcf, tv, net_debt):
         fcf = pd.read_json(fcf)
         fcf_list = fcf.iloc[-1].tolist()
         fcf_list.insert(0, 0)
@@ -108,13 +108,13 @@ class Private:
         firm_value = tv + npv
 
         if firm_value > 0:
-            equity_value = max(firm_value - debt, 0)
+            equity_value = max(firm_value - net_debt, 0)
         else:
             equity_value = 0
 
-        firm_value = equity_value + debt
+        firm_value = equity_value + net_debt
 
-        return firm_value, debt, equity_value
+        return firm_value, net_debt, equity_value
 
 
 engine = Private()

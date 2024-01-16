@@ -50,16 +50,7 @@ def apple_touch_icon():
 
 @app.errorhandler(Exception)
 def handle_error(error):
-    return render_template("projects.html")
-
-
-@app.errorhandler(InternalServerError)
-def handle_internal_server_error(error):
-    return render_template("projects.html")
-
-
-@app.errorhandler(KeyError)
-def handle_key_error(error):
+    print(f"{type(error)}: {error}")
     return render_template("projects.html")
 
 
