@@ -58,7 +58,7 @@ class Public:
         df_is = df_is.rename_axis("Income Statement", axis="columns")
         df_is.iloc[2:, 0:5] = df_is.iloc[2:, 0:5].astype(float)
         df_is.loc[df_is.index.str.contains("Ratio", case=False)] = df_is.loc[
-            df_is.index.str.contains("Ratio", case=False)].map("{:.2%}".format)
+            df_is.index.str.contains("Ratio", case=False)].applymap("{:.2%}".format)
         df_is.to_html("flaskr/templates/dcf/temp/IS_" + company + session_id + ".html",
                       float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 

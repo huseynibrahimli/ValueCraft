@@ -18,14 +18,14 @@ class Private:
         df_is.index.name = None
         df_is = df_is.rename_axis("Income Statement", axis="columns")
         df_is = df_is.astype(float)
-        df_is = df_is.iloc[:, 0:6].map("{:,.0f}".format)
+        df_is = df_is.iloc[:, 0:6].applymap("{:,.0f}".format)
         df_is.to_html("flaskr/templates/dcf/temp/IS_private_" + company_code + session_id + ".html",
                       float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 
         df_cf.index.name = None
         df_cf = df_cf.rename_axis("Cash Flow Statement", axis="columns")
         df_cf = df_cf.astype(float)
-        df_cf = df_cf.iloc[:, 0:6].map("{:,.0f}".format)
+        df_cf = df_cf.iloc[:, 0:6].applymap("{:,.0f}".format)
         df_cf.to_html("flaskr/templates/dcf/temp/CF_private_" + company_code + session_id + ".html",
                       float_format=lambda x: "{:,.0f}".format(x), classes="dataframe_statement")
 

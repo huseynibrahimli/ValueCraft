@@ -48,10 +48,10 @@ def apple_touch_icon():
     return send_from_directory(os.path.join(app.root_path, "static"), "favicon/apple-touch-icon.png", mimetype="image/vnd.microsoft.icon")
 
 
-# @app.errorhandler(Exception)
-# def handle_error(error):
-#     print(f"{type(error)}: {error}")
-#     return render_template("projects.html")
+@app.errorhandler(Exception)
+def handle_error(error):
+    print(f"{type(error)}: {error}")
+    return render_template("projects.html")
 
 
 if __name__ == "__main__":
