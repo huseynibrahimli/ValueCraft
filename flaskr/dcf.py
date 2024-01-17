@@ -34,15 +34,26 @@ def sp500():
 @bp.route("/public/statement", methods=("GET", "POST"))
 def public_statement():
     if request.method == "POST":
-        session["ticker"] = request.form["ticker"]
-        session["company_type"] = request.form.get("company_type")
-        try:
-            public.engine.import_data(session["ticker"], session["user_id"])
-        except Exception as e:
-            print(f"Error in data import: {e}")
-            return render_template("dcf/public/statement.html", ticker="ERROR")
-        else:
-            return render_template("dcf/public/statement.html", ticker=session["ticker"])
+        ticker = request.form.get("ticker")
+        company_type = request.form.get("company_type")
+        cagr_years = request.form.get("cagr_years")
+        next_page = request.form.get("next_page")
+        if ticker is not None:
+            try:
+                session["ticker"] = ticker
+                session["company_type"] = company_type
+                public.engine.import_data(session["ticker"], session["user_id"])
+            except Exception as e:
+                print(f"Error in data import: {e}")
+                return render_template("dcf/public/statement.html", ticker="ERROR", cagr_years=None)
+            else:
+                return render_template("dcf/public/statement.html", ticker=session["ticker"], cagr_years=None)
+        elif cagr_years is not None:
+            cagr_years = float(request.form.get("cagr_years"))
+            session["revenue_g"] = float(public.engine.project_revenue(session["ticker"], cagr_years))
+            return render_template("dcf/public/statement.html", ticker=session["ticker"], cagr_years=cagr_years)
+        elif next_page is not None:
+            return redirect(url_for("dcf.public_wacc"))
 
     return render_template("dcf/public/statement.html", ticker=None)
 
@@ -65,22 +76,72 @@ def balance_sheet():
     return render_template("dcf/public/balance_sheet.html", html_template_path=html_template_path)
 
 
+@bp.route("/public/wacc", methods=("GET", "POST"))
+def public_wacc():
+    if request.method == "POST":
+        wacc_type = request.form.get("type")
+        next_page = request.form.get("next_page")
+        if wacc_type == "auto":
+            wacc_calc = wacc.engine.calculate_wacc(session["ticker"])
+            session["wacc"] = float(wacc_calc[0])
+            cost_debt = "{:.2%}".format(wacc_calc[1])
+            session["risk_free"] = float(wacc_calc[2])
+            credit_spread = "{:.2%}".format(wacc_calc[3])
+            cost_equity = "{:.2%}".format(wacc_calc[4])
+            session["equity_risk_premium"] = float(wacc_calc[5])
+            beta = "{:.2f}".format(wacc_calc[6])
+            session["tax_rate"] = float(wacc_calc[7])
+            equity_weight = "{:.2%}".format(wacc_calc[8])
+            return render_template("dcf/public/wacc.html", wacc="{:.2%}".format(session["wacc"]),
+                                   type=None, cost_debt=cost_debt, risk_free="{:.2%}".format(session["risk_free"]), credit_spread=credit_spread,
+                                   cost_equity=cost_equity, equity_risk_premium="{:.2%}".format(session["equity_risk_premium"]),
+                                   beta=beta, tax_rate="{:.2%}".format(session["tax_rate"]), equity_weight=equity_weight)
+
+        elif wacc_type == "manual":
+            risk_free = request.form.get("risk_free")
+            if risk_free is None:
+                return render_template("dcf/public/wacc.html", wacc=None, type=wacc_type)
+            else:
+                session["risk_free"] = float(request.form["risk_free"])
+                credit_spread = float(request.form["credit_spread"])
+                session["equity_risk_premium"] = float(request.form["equity_risk_premium"])
+                beta = float(request.form["beta"])
+                session["tax_rate"] = float(request.form["tax_rate"])
+                equity_weight = float(request.form["equity_weight"])
+                cost_debt = session["risk_free"] + credit_spread
+                cost_equity = risk_free + (beta * session["equity_risk_premium"])
+                session["wacc"] = (cost_debt * (1 - session["tax_rate"]) * (1 - equity_weight)) + (cost_equity * equity_weight)
+                return render_template("dcf/public/wacc.html", wacc="{:.2%}".format(session["wacc"]),
+                                       type=None, cost_debt="{:.2%}".format(cost_debt), risk_free="{:.2%}".format(session["risk_free"]),
+                                       credit_spread="{:.2%}".format(credit_spread), cost_equity="{:.2%}".format(cost_equity),
+                                       equity_risk_premium="{:.2%}".format(session["equity_risk_premium"]), beta="{:.2f}".format(beta),
+                                       tax_rate="{:.2%}".format(session["tax_rate"]), equity_weight="{:.2%}".format(equity_weight))
+        elif next_page is not None:
+            return redirect(url_for("dcf.public_fcf"))
+
+    return render_template("dcf/public/wacc.html", wacc=None, type=None)
+
+
 @bp.route("/public/fcf", methods=("GET", "POST"))
 def public_fcf():
     if request.method == "POST":
-        session["projection_period"] = float(request.form["projection_period"])
-        revenue_g_year = float(request.form["revenue_g_year"])
-        session["fcf"] = public.engine.project_fcf(session["ticker"], session["user_id"], session["revenue_g"],
-                                                   session["company_type"], session["projection_period"], revenue_g_year).to_json()
+        next_page = request.form.get("next_page")
+        if next_page is None:
+            session["projection_period"] = float(request.form["projection_period"])
+            session["convergence_year"] = float(request.form["convergence_year"])
+            session["perpetuity_growth"] = float(request.form["perpetuity_growth"])
+            session["perpetuity_wacc"] = float(request.form["perpetuity_wacc"])
+            session["fcf"] = public.engine.project_fcf(session["ticker"], session["user_id"], session["company_type"], session["revenue_g"], session["tax_rate"],
+                                                       session["wacc"], session["projection_period"], session["convergence_year"],
+                                                       session["perpetuity_growth"], session["perpetuity_wacc"]).to_json()
 
-        return render_template("dcf/public/fcf.html", ticker=session["ticker"],
-                               revenue_g="{:.2%}".format(session["revenue_g"]), fcf=True)
+            return render_template("dcf/public/fcf.html", fcf=True)
+        if next_page is not None:
+            return redirect(url_for("dcf.public_terminal"))
 
-    cagr_years = float(request.args.get("cagr_years", 0))
-    session["revenue_g"] = float(public.engine.project_revenue(session["ticker"], cagr_years))
-
-    return render_template("dcf/public/fcf.html", ticker=session["ticker"],
-                           revenue_g="{:.2%}".format(session["revenue_g"]), fcf=False)
+    return render_template("dcf/public/fcf.html", ticker=session["ticker"], revenue_g="{:.2%}".format(session["revenue_g"]),
+                           wacc="{:.2%}".format(session["wacc"]), risk_free="{:.4f}".format(session["risk_free"]),
+                           erp="{:.4f}".format(session["equity_risk_premium"]), fcf=False)
 
 
 @bp.route("/public/fcf-statement")
@@ -89,76 +150,25 @@ def fcf_statement():
     return render_template("dcf/public/fcf_statement.html", html_template_path=html_template_path)
 
 
-@bp.route("/public/wacc", methods=("GET", "POST"))
-def public_wacc():
-    if request.method == "POST":
-        wacc_type = request.form["type"]
-        if wacc_type == "auto":
-            wacc_calc = wacc.engine.calculate_wacc(session["ticker"])
-            session["wacc"] = float(wacc_calc[0])
-            session["risk_free"] = float(wacc_calc[1])
-            credit_spread = "{:.2%}".format(wacc_calc[2])
-            equity_risk_premium = "{:.2%}".format(wacc_calc[3])
-            beta = "{:.2f}".format(wacc_calc[4])
-            tax_rate = "{:.2%}".format(wacc_calc[5])
-            equity_ratio = "{:.2%}".format(wacc_calc[6])
-            return render_template("dcf/public/wacc.html", wacc="{:.2%}".format(session["wacc"]),
-                                   type=None, risk_free="{:.2%}".format(session["risk_free"]), credit_spread=credit_spread,
-                                   equity_risk_premium=equity_risk_premium, beta=beta, tax_rate=tax_rate, equity_ratio=equity_ratio)
-
-        elif wacc_type == "manual":
-            risk_free = request.form.get("risk_free")
-            if risk_free is None:
-                return render_template("dcf/public/wacc.html", wacc=None, type=wacc_type, risk_free=None,
-                                       credit_spread=None, equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
-            else:
-                risk_free = float(request.form["risk_free"])
-                credit_spread = float(request.form["credit_spread"])
-                equity_risk_premium = float(request.form["equity_risk_premium"])
-                beta = float(request.form["beta"])
-                tax_rate = float(request.form["tax_rate"])
-                equity_ratio = float(request.form["equity_ratio"])
-                cost_debt = risk_free + credit_spread
-                cost_equity = risk_free + (beta * (equity_risk_premium - risk_free))
-                session["wacc"] = (cost_debt * (1 - tax_rate) * (1 - equity_ratio)) + (cost_equity * equity_ratio)
-                return render_template("dcf/public/wacc.html", wacc="{:.2%}".format(session["wacc"]),
-                                       type=None, risk_free="{:.2%}".format(risk_free),
-                                       credit_spread="{:.2%}".format(credit_spread),
-                                       equity_risk_premium="{:.2%}".format(equity_risk_premium), beta="{:.2f}".format(beta),
-                                       tax_rate="{:.2%}".format(tax_rate), equity_ratio="{:.2%}".format(equity_ratio))
-
-    return render_template("dcf/public/wacc.html", wacc=None, type=None, risk_free=None,
-                           credit_spread=None, equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
-
-
 @bp.route("/public/terminal", methods=("GET", "POST"))
 def public_terminal():
     if request.method == "POST":
-        session["growth"] = float(request.form["growth"])
-        try:
-            session["tv_discounted"] = public.engine.calc_tv(session["growth"], session["wacc"], session["fcf"],
-                                                             "{:.0f}".format(session["projection_period"]))
-            assert session["growth"] < session["wacc"]
-        except Exception as e:
-            print(f"Error in calculating terminal value: {e}")
-            return render_template("dcf/public/terminal.html", ticker=session["ticker"],
-                                   revenue_g="{:.2%}".format(session["revenue_g"]), wacc="{:.2%}".format(session["wacc"]),
-                                   growth="ERROR", tv=None)
-
-        else:
-            return render_template("dcf/public/terminal.html", ticker=session["ticker"],
-                                   revenue_g="{:.2%}".format(session["revenue_g"]), wacc="{:.2%}".format(session["wacc"]),
-                                   growth="{:.2%}".format(session["growth"]), tv="{:,.0f}".format(session["tv_discounted"]))
+        next_page = request.form.get("next_page")
+        if next_page is not None:
+            return redirect(url_for("dcf.public_value"))
+    terminal_value_calc = public.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"])
+    session["fcff_terminal"] = float(terminal_value_calc[0])
+    session["terminal_value"] = float(terminal_value_calc[1])
+    session["terminal_value_pv"] = float(terminal_value_calc[2])
 
     return render_template("dcf/public/terminal.html", ticker=session["ticker"],
-                           revenue_g="{:.2%}".format(session["revenue_g"]),
-                           wacc="{:.2%}".format(session["wacc"]), risk_free=session["risk_free"],
-                           growth=None, tv=None)
+                           perpetuity_growth="{:.2%}".format(session["perpetuity_growth"]), perpetuity_wacc="{:.2%}".format(session["perpetuity_wacc"]),
+                           fcff_terminal="{:,.0f}".format(session["fcff_terminal"]), terminal_value="{:,.0f}".format(session["terminal_value"]))
 
 
 @bp.route("/public/value", methods=("GET", "POST"))
 def public_value():
-    dcf_value = public.engine.calc_dcf(session["ticker"], session["wacc"], session["fcf"], session["tv_discounted"], session["company_type"])
+    dcf_value = public.engine.calc_dcf(session["ticker"], session["fcf"], session["terminal_value_pv"], session["company_type"])
     target_price = "{:,.2f}".format(dcf_value[0])
     market_price = "{:,.2f}".format(dcf_value[1])
     firm_value = "{:,.0f}".format(dcf_value[2])
@@ -173,11 +183,10 @@ def public_value():
             file_path = os.path.join(folder_path, file)
             os.remove(file_path)
 
-    return render_template("dcf/public/value.html", ticker=session["ticker"],
-                           wacc="{:.2%}".format(session["wacc"]), g="{:.2%}".format(session["growth"]),
-                           tv="{:,.0f}".format(session["tv_discounted"]), target_price=target_price,
-                           market_price=market_price, firm_value=firm_value, net_debt=net_debt,
-                           equity_value=equity_value, n_shares=n_shares)
+    return render_template("dcf/public/value.html", ticker=session["ticker"], target_price=target_price, market_price=market_price,
+                           wacc="{:.2%}".format(session["wacc"]), perpetuity_growth="{:.2%}".format(session["perpetuity_growth"]),
+                           terminal_value="{:,.0f}".format(session["terminal_value"]),  equity_value=equity_value, net_debt=net_debt,  firm_value=firm_value,
+                           n_shares=n_shares)
 
 
 @bp.route("/private/statement", methods=("GET", "POST"))
@@ -254,21 +263,21 @@ def private_wacc():
             if risk_free is None:
                 return render_template("/dcf/private/wacc.html", type=beta_type, industry=None, cap=None,
                                        benchmark=None, revenue_g=None, wacc=None, risk_free=None, credit_spread=None,
-                                       equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
+                                       equity_risk_premium=None, beta=None, tax_rate=None, equity_weight=None)
             else:
                 risk_free = float(request.form["risk_free"])
                 credit_spread = float(request.form["credit_spread"])
                 equity_risk_premium = float(request.form["equity_risk_premium"])
                 beta = float(request.form["beta"])
                 tax_rate = float(request.form["tax_rate"])
-                equity_ratio = float(request.form["equity_ratio"])
+                equity_weight = float(request.form["equity_weight"])
                 cost_debt = risk_free + credit_spread
                 cost_equity = risk_free + (beta * (equity_risk_premium - risk_free))
-                session["wacc"] = (cost_debt * (1 - tax_rate) * (1 - equity_ratio)) + (cost_equity * equity_ratio)
+                session["wacc"] = (cost_debt * (1 - tax_rate) * (1 - equity_weight)) + (cost_equity * equity_weight)
                 return render_template("/dcf/private/wacc.html", type=beta_type, industry=None, cap=None,
                                        benchmark=None, revenue_g="{:.2%}".format(session["revenue_g"]),
                                        wacc="{:.2%}".format(session["wacc"]), risk_free=risk_free, credit_spread=credit_spread,
-                                       equity_risk_premium=equity_risk_premium, beta=beta, tax_rate=tax_rate, equity_ratio=equity_ratio)
+                                       equity_risk_premium=equity_risk_premium, beta=beta, tax_rate=tax_rate, equity_weight=equity_weight)
 
         elif beta_type == "beta":
             risk_free = request.form.get("risk_free")
@@ -277,31 +286,31 @@ def private_wacc():
             beta = request.form.get("beta")
             cap = request.form.get("cap")
             tax_rate = request.form.get("tax_rate")
-            equity_ratio = request.form.get("equity_ratio")
+            equity_weight = request.form.get("equity_weight")
             credit_spread = request.form.get("credit_spread")
             equity_risk_premium = request.form.get("equity_risk_premium")
             if industry is None and benchmark is None and beta is None:
                 return render_template("/dcf/private/wacc.html", type=beta_type, industry=None, cap=None,
                                        benchmark=None, revenue_g=None, wacc=None, risk_free=None, credit_spread=None,
-                                       equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
+                                       equity_risk_premium=None, beta=None, tax_rate=None, equity_weight=None)
             else:
                 if benchmark is None and beta is None:
                     list_check = wacc.engine.estimate_beta(industry, cap, session["company_code"], session["user_id"])
                     if list_check.empty:
                         return render_template("/dcf/private/wacc.html", type=beta_type, industry=None,
                                                cap=cap, benchmark=None, revenue_g=None, wacc=None, risk_free=None,
-                                               credit_spread=None, equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
+                                               credit_spread=None, equity_risk_premium=None, beta=None, tax_rate=None, equity_weight=None)
                     else:
                         return render_template("/dcf/private/wacc.html", type=beta_type, industry=industry,
                                                cap=None, benchmark=None, revenue_g=None, wacc=None, risk_free=None, credit_spread=None,
-                                               equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
+                                               equity_risk_premium=None, beta=None, tax_rate=None, equity_weight=None)
                 else:
                     if beta is None:
-                        company_beta = wacc.engine.calculate_beta(benchmark, float(tax_rate), float(equity_ratio))
+                        company_beta = wacc.engine.calculate_beta(benchmark, float(tax_rate), float(equity_weight))
                         if company_beta == "na":
                             return render_template("/dcf/private/wacc.html", type=beta_type, industry="VALUE", cap="VALUE",
                                                    benchmark=None, revenue_g=None, wacc=None, risk_free=None, credit_spread=None,
-                                                   equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
+                                                   equity_risk_premium=None, beta=None, tax_rate=None, equity_weight=None)
                         else:
                             beta = float(company_beta[0])
                             risk_free = float(company_beta[1])
@@ -310,24 +319,24 @@ def private_wacc():
                                                    benchmark=None, revenue_g=None, wacc=None, risk_free="{:.4f}".format(risk_free),
                                                    credit_spread=None, equity_risk_premium="{:.4f}".format(equity_risk_premium),
                                                    beta="{:.2f}".format(beta), tax_rate="{:.4f}".format(float(tax_rate)),
-                                                   equity_ratio="{:.4f}".format(float(equity_ratio)))
+                                                   equity_weight="{:.4f}".format(float(equity_weight)))
                     else:
                         risk_free = float(risk_free)
                         credit_spread = float(credit_spread)
                         equity_risk_premium = float(equity_risk_premium)
                         beta = float(beta)
                         tax_rate = float(tax_rate)
-                        equity_ratio = float(equity_ratio)
+                        equity_weight = float(equity_weight)
                         cost_debt = risk_free + credit_spread
                         cost_equity = risk_free + (beta * (equity_risk_premium - risk_free))
-                        session["wacc"] = (cost_debt * (1 - tax_rate) * (1 - equity_ratio)) + (cost_equity * equity_ratio)
+                        session["wacc"] = (cost_debt * (1 - tax_rate) * (1 - equity_weight)) + (cost_equity * equity_weight)
                         return render_template("/dcf/private/wacc.html", type=beta_type, industry=None, cap=None,
                                                benchmark=None, revenue_g="{:.2%}".format(session["revenue_g"]),
                                                wacc="{:.2%}".format(session["wacc"]), risk_free=risk_free, credit_spread=credit_spread,
-                                               equity_risk_premium=equity_risk_premium, beta=beta, tax_rate=tax_rate, equity_ratio=equity_ratio)
+                                               equity_risk_premium=equity_risk_premium, beta=beta, tax_rate=tax_rate, equity_weight=equity_weight)
 
     return render_template("/dcf/private/wacc.html", type=None, industry=None, cap=None, benchmark=None, revenue_g=None,
-                           wacc=None, risk_free=None, credit_spread=None, equity_risk_premium=None, beta=None, tax_rate=None, equity_ratio=None)
+                           wacc=None, risk_free=None, credit_spread=None, equity_risk_premium=None, beta=None, tax_rate=None, equity_weight=None)
 
 
 @bp.route("/private/beta")

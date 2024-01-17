@@ -11,28 +11,48 @@ pd.set_option("display.max_columns", 999)
 
 api_key = "24cb7ed8e2f85f03a04132535646cc5f"
 
+# https://pages.stern.nyu.edu/~adamodar/
+equity_risk_premium = 0.0457
+
 
 class WACC:
 
-    def __init__(self, key):
+    def __init__(self, key, risk_premium):
         self.key = key
+        self.risk_premium = risk_premium
 
     def calculate_wacc(self, company):
-        income_statement = requests.get(
-            f"https://financialmodelingprep.com/api/v3/income-statement/{company}?apikey={self.key}").json()
         company_profile = requests.get(
             f"https://financialmodelingprep.com/api/v3/profile/{company}?apikey={self.key}").json()
         financial_ratios = requests.get(
             f"https://financialmodelingprep.com/api/v3/ratios/{company}?apikey={self.key}").json()
+        market_cap = requests.get(
+            f"https://financialmodelingprep.com/api/v3/market-capitalization/{company}?apikey={self.key}").json()
+        balance_sheet = requests.get(
+            f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company}?apikey={self.key}").json()
 
-        interest_coverage_ratio = ((income_statement[0]["ebitda"] - income_statement[0]["depreciationAndAmortization"])
-                                   / income_statement[0]["interestExpense"])
+        beta = company_profile[0]["beta"]
+
+        financial_ratios = pd.DataFrame(financial_ratios[0:5])
+        interest_coverage_ratio = financial_ratios["interestCoverage"].mean()
+        tax_rate = financial_ratios["effectiveTaxRate"].mean()
+        if tax_rate < 0:
+            tax_rate = 0
+
+        equity_value = market_cap[0]["marketCap"]
+        debt_value = balance_sheet[0]["totalDebt"]
+        equity_weight = equity_value / (equity_value + debt_value)
+        debt_weight = 1 - equity_weight
+
+        start = (datetime.datetime.today() - datetime.timedelta(days=10))
+        end = datetime.datetime.now()
+        treasury_10Y = web.DataReader("DGS10", "fred", start, end)
+        risk_free = treasury_10Y.iloc[-1, 0] / 100
 
         credit_ratings = pd.read_json("flaskr/data/dcf/credit_ratings.json")
         credit_ratings.set_index("Symbol", inplace=True)
         credit_ratings.index.name = None
         credit_ratings.rename_axis("Ticker", axis="columns", inplace=True)
-
         credit_spread = credit_ratings.loc[company, "Spread"]
 
         if credit_spread is None:
@@ -51,29 +71,11 @@ class WACC:
 
             credit_spread = credit_bands[closest_key]
 
-        start = (datetime.datetime.today() - datetime.timedelta(days=10))
-        end = datetime.datetime.now()
-        treasury_10Y = web.DataReader("DGS10", "fred", start, end)
-        risk_free = treasury_10Y.iloc[-1, 0] / 100
-        cost_of_debt = risk_free + credit_spread
+        cost_debt = risk_free + credit_spread
+        cost_equity = risk_free + (beta * self.risk_premium)
+        wacc = (cost_debt * (1 - tax_rate) * debt_weight) + (cost_equity * equity_weight)
 
-        beta = company_profile[0]["beta"]
-
-        # https://pages.stern.nyu.edu/~adamodar/
-        equity_risk_premium = 0.0457
-
-        cost_of_equity = risk_free + (beta * equity_risk_premium)
-
-        tax_rate = financial_ratios[0]["effectiveTaxRate"]
-        if tax_rate < 0:
-            tax_rate = 0
-
-        debt_to_equity = financial_ratios[0]["debtEquityRatio"]
-        debt_ratio = debt_to_equity / (debt_to_equity + 1)
-        equity_ratio = max(1 - debt_ratio, 0)
-        wacc = (cost_of_debt * (1 - tax_rate) * debt_ratio) + (cost_of_equity * equity_ratio)
-
-        return wacc, risk_free, credit_spread, equity_risk_premium, beta, tax_rate, equity_ratio
+        return wacc, cost_debt, risk_free, credit_spread, cost_equity, self.risk_premium, beta, tax_rate, equity_weight
 
     def estimate_beta(self, industry, cap, company_code, session_id):
         if cap == "small":
@@ -101,22 +103,17 @@ class WACC:
 
         return company_list
 
-    def calculate_beta(self, reference_company, tax_rate, equity_ratio):
-        beta = requests.get(
-            f"https://financialmodelingprep.com/api/v3/profile/{reference_company}?apikey={self.key}").json()
-        financial_ratios = requests.get(
-            f"https://financialmodelingprep.com/api/v3/ratios/{reference_company}?apikey={self.key}").json()
+    def calculate_beta(self, reference_company, tax_rate, equity_weight):
+        try:
+            beta = requests.get(
+                f"https://financialmodelingprep.com/api/v3/profile/{reference_company}?apikey={self.key}").json()
+            financial_ratios = requests.get(
+                f"https://financialmodelingprep.com/api/v3/ratios/{reference_company}?apikey={self.key}").json()
 
-        if not beta or not financial_ratios:
-            return "na"
-        else:
             start = (datetime.datetime.today() - datetime.timedelta(days=10))
             end = datetime.datetime.now()
             treasury_10Y = web.DataReader("DGS10", "fred", start, end)
             risk_free = treasury_10Y.iloc[-1, 0] / 100
-
-            # https://pages.stern.nyu.edu/~adamodar/
-            equity_risk_premium = 0.0457
 
             reference_levered_beta = beta[0]["beta"]
 
@@ -125,14 +122,18 @@ class WACC:
                 reference_tax_rate = 0
 
             reference_debt_to_equity = financial_ratios[0]["debtEquityRatio"]
-            actual_debt_to_equity = (1 - equity_ratio) / equity_ratio
+            actual_debt_to_equity = (1 - equity_weight) / equity_weight
+
             unlevered_beta = reference_levered_beta / (1 + (1 - reference_tax_rate) * reference_debt_to_equity)
             actual_levered_beta = unlevered_beta * (1 + (1 - tax_rate) * actual_debt_to_equity)
 
             if actual_levered_beta > 0:
-                return actual_levered_beta, risk_free, equity_risk_premium
+                return actual_levered_beta, risk_free, self.risk_premium
             else:
                 return "na"
+        except Exception as e:
+            print(f"Sufficient information doesn't exist: {e}")
+            return "na"
 
 
-engine = WACC(api_key)
+engine = WACC(api_key, equity_risk_premium)

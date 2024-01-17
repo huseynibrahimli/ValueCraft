@@ -6,18 +6,26 @@
 {% if fcf == False %}
     <div class="flex-info">
         <div id="emoji-info">&#128071</div>
-        <div>Please enter projection period and the year when revenue growth rate will start to converge to perpetuity level that is assumed to be risk-free rate</div>
+        <div>Please enter projection period (years), start year of convergence to steady state, perpetuity growth rate (<= risk-free rate) and perpetuity cost of capital</div>
     </div><br>
     <form action="/dcf/public/fcf" method="POST">
         <table border="1" class="dataframe_wacc">
           <tbody>
             <tr>
-              <th>Projection period (years)</th>
-              <td><input type="number" name="projection_period" required="required" autofocus min="1" step="1" value="10"></td>
+              <th>Projection period</th>
+              <td><input type="number" name="projection_period" required="required" autofocus min="5" step="1" value="10"></td>
             </tr>
             <tr>
-              <th>Revenue growth change year</th>
-              <td><input type="number" name="revenue_g_year" required="required" min="2" step="1" value="6"></td>
+              <th>Convergence start year</th>
+              <td><input type="number" name="convergence_year" required="required" min="2" step="1" value="6"></td>
+            </tr>
+            <tr>
+              <th>Perpetuity growth rate</th>
+              <td><input type="number" name="perpetuity_growth" required="required" max="{{ risk_free }}" step="0.0001" value="{{ risk_free }}"></td>
+            </tr>
+            <tr>
+              <th>Perpetuity cost of capital</th>
+              <td><input type="number" name="perpetuity_wacc" required="required" min="0" step="0.0001" value="{{ erp }}"></td>
             </tr>
           </tbody>
         </table><br>
@@ -36,14 +44,18 @@
         </tr>
         <tr>
           <th>WACC</th>
-          <td></td>
+          <td>{{ wacc }}</td>
         </tr>
         <tr>
-          <th>Perpetuity growth</th>
-          <td></td>
+          <th>Risk-free rate</th>
+          <td>{{ risk_free }}</td>
         </tr>
         <tr>
-          <th>Discounted terminal value</th>
+          <th>Implied ERP</th>
+          <td>{{ erp }}</td>
+        </tr>
+        <tr>
+          <th>Terminal value</th>
           <td></td>
         </tr>
       </tbody>
@@ -51,8 +63,8 @@
 
 {% else %}
     <div class="flex-menu">
-      <form action="/dcf/public/wacc" method="GET">
-        <button type="submit" >Calculate cost of capital</button>
+      <form action="/dcf/public/fcf" method="POST">
+        <button type="submit" name="next_page" value="terminal">Calculate terminal value</button>
       </form>
     </div><br>
 

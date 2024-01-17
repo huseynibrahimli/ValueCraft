@@ -52,12 +52,12 @@
         <table border="1" class="dataframe_wacc">
           <tbody>
             <tr>
-              <th>Tax rate</th>
+              <th>Effective tax rate</th>
               <td><input type="number" name="tax_rate" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
             </tr>
             <tr>
-              <th>Equity ratio</th>
-              <td><input type="number" name="equity_ratio" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+              <th>Equity weight</th>
+              <td><input type="number" name="equity_weight" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
             </tr>
           </tbody>
         </table><br>
@@ -66,8 +66,8 @@
 
 {% else %}
     <div class="flex-menu">
-        <form action="/dcf/public/terminal" method="GET">
-            <button type="submit">Calculate terminal value</button>
+        <form action="/dcf/public/wacc" method="POST">
+            <button type="submit" name="next_page" value="fcf">Calculate free cash flow</button>
         </form>
     </div><br>
     <table border="1" class="dataframe_indicator">
@@ -75,6 +75,10 @@
         <tr>
           <th>WACC</th>
           <td>{{ wacc }}</td>
+        </tr>
+        <tr>
+          <th>Cost of debt</th>
+          <td>{{ cost_debt }}</td>
         </tr>
         <tr>
           <th>Risk-free rate</th>
@@ -85,6 +89,10 @@
           <td>{{ credit_spread }}</td>
         </tr>
         <tr>
+          <th>Cost of equity</th>
+          <td>{{ cost_equity }}</td>
+        </tr>
+        <tr>
           <th>Implied ERP</th>
           <td>{{ equity_risk_premium }}</td>
         </tr>
@@ -93,12 +101,12 @@
           <td>{{ beta }}</td>
         </tr>
         <tr>
-          <th>Tax rate</th>
+          <th>Effective tax rate</th>
           <td>{{ tax_rate }}</td>
         </tr>
         <tr>
-          <th>Equity ratio</th>
-          <td>{{ equity_ratio }}</td>
+          <th>Equity weight</th>
+          <td>{{ equity_weight }}</td>
         </tr>
       </tbody>
     </table>

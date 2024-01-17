@@ -1,10 +1,6 @@
 import os
-
 from flask import Flask, redirect, render_template, request, url_for, send_from_directory
-from flaskr import db
-from flaskr import dcf, bsm, swp
-from werkzeug.exceptions import InternalServerError
-
+from flaskr import db, dcf, bsm, swp
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_mapping(SECRET_KEY="c01a9df280f6d5bb42e36781c7738112b942f9d02ce700ac97877c2067ec9f99",

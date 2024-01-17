@@ -41,22 +41,30 @@
     </div>
 
 {% else %}
-    <div class="flex-info">
-        <div id="emoji-info">&#128071</div>
-        <div>Please enter number of years to calculate average revenue growth rate</div>
-    </div><br>
-    <form action="/dcf/public/fcf" method="GET">
-        <input type="number" name="cagr_years" required="required" autofocus min="0" step="1" value="10"><br><br>
-        <button class="action" type="submit">Calculate</button>
-    </form><br>
+    {% if cagr_years == None %}
+        <div class="flex-info">
+            <div id="emoji-info">&#128071</div>
+            <div>Please enter time period in years to calculate compound annual growth rate of revenue</div>
+        </div><br>
+        <form action="/dcf/public/statement" method="POST">
+            <input type="number" name="cagr_years" required="required" autofocus min="1" step="1" value="10"><br><br>
+            <button class="action" type="submit">Calculate</button>
+        </form><br>
+    {% else %}
+        <div class="flex-menu">
+          <form action="/dcf/public/statement" method="POST">
+            <button type="submit" name="next_page" value="wacc">Calculate cost of capital</button>
+          </form>
+        </div><br>
 
-    <iframe src="/dcf/public/income-statement" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
-            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
+        <iframe src="/dcf/public/income-statement" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+                onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
 
-    <iframe src="/dcf/public/cash-flow" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
-            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
+        <iframe src="/dcf/public/cash-flow" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+                onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe><br>
 
-    <iframe src="/dcf/public/balance-sheet" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
-            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+        <iframe src="/dcf/public/balance-sheet" width="100%" height="100%" style="border:none" sandbox="allow-same-origin"
+                onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
+    {% endif %}
 {% endif %}
 {% endblock %}

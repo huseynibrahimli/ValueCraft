@@ -52,12 +52,12 @@
         <table border="1" class="dataframe_wacc">
           <tbody>
             <tr>
-              <th>Tax rate</th>
+              <th>Effective tax rate</th>
               <td><input type="number" name="tax_rate" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
             </tr>
             <tr>
-              <th>Equity ratio</th>
-              <td><input type="number" name="equity_ratio" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+              <th>Equity weight</th>
+              <td><input type="number" name="equity_weight" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
             </tr>
           </tbody>
         </table><br>
@@ -254,7 +254,7 @@
           {% if cap == None %}
             <div class="flex-info">
                 <div id="emoji-info2">&#9997</div>
-                <div>Please enter the ticker of benchmark company, effective tax rate and equity ratio of target company</div>
+                <div>Please enter the ticker of benchmark company, effective tax rate and equity weight of target company</div>
             </div><br>
           {% elif cap != None %}
             <div class="flex-alert">
@@ -272,12 +272,12 @@
                           pattern="[A-Za-z]{1,5}" title="One-to-five letter stock code"></td>
                   </tr>
                   <tr>
-                    <th>Tax rate</th>
+                    <th>Effective tax rate</th>
                     <td><input type="number" name="tax_rate" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
                   </tr>
                   <tr>
-                    <th>Equity ratio</th>
-                    <td><input type="number" name="equity_ratio" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
+                    <th>Equity weight</th>
+                    <td><input type="number" name="equity_weight" required="required" min="0.0001" step="0.0001" value="0.0000"></td>
                   </tr>
                 </tbody>
               </table><br><br>
@@ -329,12 +329,12 @@
                 <table border="1" class="dataframe_wacc">
                   <tbody>
                     <tr>
-                      <th>Tax rate</th>
+                      <th>Effective tax rate</th>
                       <td><input type="number" name="tax_rate" value={{ tax_rate }} readonly></td>
                     </tr>
                     <tr>
-                      <th>Equity ratio</th>
-                      <td><input type="number" name="equity_ratio" value={{ equity_ratio }} readonly></td>
+                      <th>Equity weight</th>
+                      <td><input type="number" name="equity_weight" value={{ equity_weight }} readonly></td>
                     </tr>
                   </tbody>
                 </table><br>
@@ -360,11 +360,11 @@
           <td>{{ wacc }}</td>
         </tr>
         <tr>
-          <th>Perpetuity growth</th>
+          <th>Perpetuity growth rate</th>
           <td></td>
         </tr>
         <tr>
-          <th>Discounted terminal value</th>
+          <th>Terminal value</th>
           <td></td>
         </tr>
       </tbody>

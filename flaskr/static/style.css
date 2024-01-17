@@ -9,10 +9,12 @@ body {background: GhostWhite no-repeat center fixed; background-size:cover}
 .flex-header button {width:18vw; height:6vw; padding:1vw; font-size:1.5vw; color:white; background-color:#006192;
                      border:none; font-weight:bold; border-radius:1vw; text-align:center; margin-right:1vw; cursor:pointer; text-decoration:none}
 
-@media screen and (max-width: 1000px) {.header {font-size:10vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {.flex-header form {margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {.flex-header button {width:60vw; height:20vw; padding:2vw; font-size:5vw}}
-@media screen and (max-width: 1000px) {#private {display:none}}
+@media screen and (max-width: 1000px) {
+.header {font-size:10vw; margin-bottom:5vw}
+.flex-header form {margin-bottom:5vw}
+.flex-header button {width:60vw; height:20vw; padding:2vw; font-size:5vw}
+#private {display:none}
+}
 
 /*stock ticker and growth rate entry pages*/
 .flex-info {display:flex; align-items:center; padding:1vw; color:white; background-color:DodgerBlue; font-weight:bold;
@@ -35,15 +37,17 @@ input[name="cagr_years"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:
 label[for="company_type"]  {font-weight:bold; margin-left:1vw}
 #company_type {}
 
-@media screen and (max-width: 1000px) {.flex-info, .flex-alert {width:100%; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {.flex-info div, .flex-alert div {font-size:5vw}}
-@media screen and (max-width: 1000px) {#alert-text {font-size:5vw; width:100%; height:40vw; margin-bottom:2vw}}
-@media screen and (max-width: 1000px) {#emoji-info, #emoji-info2, #emoji-info3, #emoji-alert, #emoji-alert2 {font-size:8vw}}
-@media screen and (max-width: 1000px) {input[name="ticker"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {input[name="growth"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {input[name="cagr_years"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {label[for="company_type"] {font-size:5vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {#company_type {transform:scale(2); margin-left:2vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {
+.flex-info, .flex-alert {width:100%; margin-bottom:5vw}
+.flex-info div, .flex-alert div {font-size:5vw}
+#alert-text {font-size:5vw; width:100%; height:40vw; margin-bottom:2vw}
+#emoji-info, #emoji-info2, #emoji-info3, #emoji-alert, #emoji-alert2 {font-size:8vw}
+input[name="ticker"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
+input[name="growth"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
+input[name="cagr_years"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
+label[for="company_type"] {font-size:5vw; margin-bottom:5vw}
+#company_type {transform:scale(2); margin-left:2vw; margin-bottom:5vw}
+}
 
 /*private specific items*/
 input[name="company_code"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
@@ -51,8 +55,10 @@ input[name="debt"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 select, input[name="industry"], option {font-size:1vw}
 label {margin-left:1vw}
 
-@media screen and (max-width: 1000px) {select, input[name="industry"], option {font-size:5vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {label > strong {font-size:5vw}}
+@media screen and (max-width: 1000px) {
+select, input[name="industry"], option {font-size:5vw; margin-bottom:5vw}
+label > strong {font-size:5vw}
+}
 
 /*menu option selector*/
 .flex-menu form {display:flex; margin-top:2vw; margin-left:1vw}
@@ -60,18 +66,21 @@ label {margin-left:1vw}
                    border:none; font-weight:bold; border-radius:1vw; text-align:center; margin-bottom:1vw; margin-right:1vw;
                    cursor:pointer; text-decoration:none}
 
-@media screen and (max-width: 1000px) {.flex-menu form {flex-direction:column; align-items:center; margin-top:10vw; margin-bottom:5vw}}
-@media screen and (max-width: 1000px) {.flex-menu button {padding:2vw; width:60vw; height:20vw; font-size:5vw; margin-bottom:5vw}}
+@media screen and (max-width: 1000px) {
+.flex-menu form {flex-direction:column; align-items:center; margin-top:10vw; margin-bottom:5vw}
+.flex-menu button {padding:2vw; width:60vw; height:20vw; font-size:5vw; margin-bottom:5vw}
+}
 
 /*home page - market price table*/
 .dataframe_sp500 {border-collapse:collapse; margin-left:0.2vw; margin-right:0.5vw; width:100%}
 .dataframe_sp500 th {color:white; background-color:navy}
 .dataframe_sp500 th, .dataframe_sp500 td {text-align:center; width:12vw; padding:0.5vw; font-size:1.4vw; border:0.5vw solid #ddd}
 
-@media screen and (max-width: 1000px) {.dataframe_sp500 th:nth-child(4), .dataframe_sp500 td:nth-child(4) {display:none}}
-@media screen and (max-width: 1000px) {.dataframe_sp500 th:nth-child(5), .dataframe_sp500 td:nth-child(5) {display:none}}
-@media screen and (max-width: 1000px) {.dataframe_sp500 th, .dataframe_sp500 td {font-size:4vw}}
-/*@media screen and (max-width: 1000px) {.dataframe_sp500 {display:none}}*/
+@media screen and (max-width: 1000px) {
+.dataframe_sp500 th:nth-child(4), .dataframe_sp500 td:nth-child(4) {display:none}
+.dataframe_sp500 th:nth-child(5), .dataframe_sp500 td:nth-child(5) {display:none}
+.dataframe_sp500 th, .dataframe_sp500 td {font-size:4vw}
+}
 
 /*financial statement table*/
 .dataframe_statement {border-collapse:collapse; margin-left:0.2vw; margin-right:0.5vw; width:100%}
@@ -85,20 +94,26 @@ label {margin-left:1vw}
 .dataframe_indicator th {color:white; background-color:navy}
 .dataframe_indicator th, .dataframe_indicator td {text-align:center; width:12vw; padding:0.5vw; font-size:1vw; font-weight:bold; border:0.5vw solid #ddd}
 
-@media screen and (max-width: 1000px) {.dataframe_indicator {width:100%}}
-@media screen and (max-width: 1000px) {.dataframe_indicator th, .dataframe_indicator td {padding:4vw; font-size:5vw}}
+@media screen and (max-width: 1000px) {
+.dataframe_indicator {width:100%}
+.dataframe_indicator th {width:50%; padding:2vw; font-size:5vw}
+.dataframe_indicator td {width:50%; padding:2vw; font-size:5vw}
+}
 
 /*wacc data entry table*/
-.dataframe_wacc {border-collapse:collapse; margin: 2vw 1vw 1vw 1vw}
+.dataframe_wacc {border-collapse:collapse; margin: 2vw 1vw 1vw 0.5vw}
 .dataframe_wacc th {color:white; background-color:navy}
 .dataframe_wacc th, .dataframe_wacc td {text-align:center; width:12vw; padding:0.5vw; font-size:1vw; font-weight:bold; border:0.5vw solid #ddd}
 .dataframe_wacc input[type="number"] {width:10vw; font-size:1vw; text-align:center}
 .dataframe_wacc input[name="benchmark"] {width:10vw; font-size:1vw; text-align:center}
 
-@media screen and (max-width: 1000px) {.dataframe_wacc {margin-bottom:10vw; width:100%}}
-@media screen and (max-width: 1000px) {.dataframe_wacc th, .dataframe_wacc td {width:50%; padding:2vw; font-size:5vw}}
-@media screen and (max-width: 1000px) {.dataframe_wacc input[type="number"] {width:90%; font-size:5vw}}
-@media screen and (max-width: 1000px) {.dataframe_wacc input[name="benchmark"] {width:90%; font-size:5vw}}
+@media screen and (max-width: 1000px) {
+.dataframe_wacc {margin-bottom:10vw; width:100%}
+.dataframe_wacc th {width:50%; padding:2vw; font-size:5vw}
+.dataframe_wacc td {width:50%; padding:2vw; font-size:5vw}
+.dataframe_wacc input[type="number"] {width:90%; font-size:5vw}
+.dataframe_wacc input[name="benchmark"] {width:90%; font-size:5vw}
+}
 
 /*final page - summary table*/
 .dataframe_summary {border-collapse:collapse; margin: 2vw 1vw 1vw 1vw}
@@ -107,8 +122,8 @@ label {margin-left:1vw}
 
 @media screen and (max-width: 1000px) {
 .dataframe_summary {margin-top:5vw; margin-bottom:5vw; width:100%}
-.dataframe_summary th {width:40%; padding:2vw; font-size:5vw}
-.dataframe_summary td {width:60%; padding:2vw; font-size:5vw}
+.dataframe_summary th {width:35%; padding:2vw; font-size:5vw}
+.dataframe_summary td {width:65%; padding:2vw; font-size:5vw}
 }
 
 /*action buttons*/

@@ -94,11 +94,11 @@ class Private:
         fcf = pd.read_json(fcf)
         if fcf["T+5"]["FCF"] > 0:
             terminal_value = (fcf["T+5"]["FCF"] * (1 + g)) / (wacc - g)
-            terminal_value_discounted = max(round(terminal_value / (1 + wacc) ** 5), 0)
+            terminal_value_pv = max(round(terminal_value / (1 + wacc) ** 5), 0)
         else:
-            terminal_value_discounted = 0
+            terminal_value_pv = 0
 
-        return terminal_value_discounted
+        return terminal_value_pv
 
     def calc_dcf(self, wacc, fcf, tv, net_debt):
         fcf = pd.read_json(fcf)
