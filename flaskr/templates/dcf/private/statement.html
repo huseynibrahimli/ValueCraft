@@ -17,7 +17,7 @@
         <div>Please enter company name and upload the template</div>
     </div><br>
 
-    {% if company_code == 'ERROR' %}
+    {% if company_code == "ERROR" %}
         <div class="flex-alert">
             <div id="emoji-alert">&#9888</div>
             <div>Template is wrong!</div>
@@ -33,8 +33,8 @@
 
 {% else %}
     <div class="flex-menu">
-      <form action="/dcf/private/fcf" method="GET">
-        <button type="submit">Calculate revenue growth</button>
+      <form action="/dcf/private/statement" method="POST">
+        <button type="submit" name="next_page" value="wacc">Calculate cost of capital</button>
       </form>
     </div><br>
 

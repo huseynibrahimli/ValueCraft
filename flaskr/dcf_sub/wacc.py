@@ -77,7 +77,7 @@ class WACC:
 
         return wacc, cost_debt, risk_free, credit_spread, cost_equity, self.risk_premium, beta, tax_rate, equity_weight
 
-    def estimate_beta(self, industry, cap, company_code, session_id):
+    def beta_reference_list(self, industry, cap, company_code, session_id):
         if cap == "small":
             low, high = 10000000, 2000000000
         elif cap == "mid":

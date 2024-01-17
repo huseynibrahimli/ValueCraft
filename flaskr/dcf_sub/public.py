@@ -1,4 +1,3 @@
-import numpy_financial as npf
 import pandas as pd
 import requests
 

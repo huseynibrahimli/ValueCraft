@@ -3,13 +3,35 @@
 {% block title %}DCF{% endblock %}
 
 {% block content %}
-
 {% if fcf == False %}
-    <div class="flex-menu">
-        <form action="/dcf/private/fcf" method="POST">
-            <button type="submit">Project free cash flows</button>
-        </form>
+    <div class="flex-info">
+        <div id="emoji-info">&#128071</div>
+        <div>Please enter projection period (years), start year of convergence to steady state, perpetuity growth rate (<= risk-free rate) and perpetuity cost of capital</div>
     </div><br>
+    <form action="/dcf/private/fcf" method="POST">
+        <table border="1" class="dataframe_wacc">
+          <tbody>
+            <tr>
+              <th>Projection period</th>
+              <td><input type="number" name="projection_period" required="required" autofocus min="5" step="1" value="10"></td>
+            </tr>
+            <tr>
+              <th>Convergence start year</th>
+              <td><input type="number" name="convergence_year" required="required" min="2" step="1" value="6"></td>
+            </tr>
+            <tr>
+              <th>Perpetuity growth rate</th>
+              <td><input type="number" name="perpetuity_growth" required="required" max="{{ perp_g }}" step="0.0001" value="{{ perp_g }}"></td>
+            </tr>
+            <tr>
+              <th>Perpetuity cost of capital</th>
+              <td><input type="number" name="perpetuity_wacc" required="required" min="0" step="0.0001" value="{{ perp_wacc }}"></td>
+            </tr>
+          </tbody>
+        </table><br>
+        <button class="action" type="submit">Calculate</button>
+    </form><br>
+
     <table border="1" class="dataframe_indicator">
       <tbody>
         <tr>
@@ -18,11 +40,15 @@
         </tr>
         <tr>
           <th>WACC</th>
-          <td></td>
+          <td>{{ wacc }}</td>
         </tr>
         <tr>
-          <th>Perpetuity growth rate</th>
-          <td></td>
+          <th>Risk-free rate</th>
+          <td>{{ risk_free }}</td>
+        </tr>
+        <tr>
+          <th>Implied ERP</th>
+          <td>{{ erp }}</td>
         </tr>
         <tr>
           <th>Terminal value</th>
@@ -33,12 +59,12 @@
 
 {% else %}
     <div class="flex-menu">
-      <form action="/dcf/private/wacc" method="GET">
-        <button type="submit" >Calculate cost of capital</button>
+      <form action="/dcf/private/fcf" method="POST">
+        <button type="submit" name="next_page" value="terminal">Calculate terminal value</button>
       </form>
     </div><br>
 
-    <iframe src="/dcf/private/fcf-statement" width="100%" height="100%" style="border:none;" sandbox="allow-same-origin"
-            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"> </iframe>
+    <iframe src="/dcf/private/fcf-statement" width="100%" height="50%" style="border:none" sandbox="allow-same-origin"
+            onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"></iframe>
 {% endif %}
 {% endblock %}

@@ -3,60 +3,41 @@
 {% block title %}DCF{% endblock %}
 
 {% block content %}
-{% if growth == None %}
+{% if net_debt == None %}
     <div class="flex-info">
         <div id="emoji-info">&#128071</div>
-        <div>Please enter perpetuity growth rate (in decimals)</div>
-    </div><br>
-    <form action="/dcf/private/terminal" method="POST">
-        <input type="number" name="growth" required="required" autofocus min="0" step="0.0001" value="0.02"><br><br>
-        <button class="action" type="submit">Calculate</button>
-    </form><br>
-
-{% elif growth == "ERROR" %}
-    <div class="flex-alert">
-        <div id="emoji-alert">&#9888</div>
-        <div>Perpetuity growth rate has to be lower than WACC</div>
-    </div><br>
-    <div class="flex-info">
-        <div id="emoji-info2">&#128071</div>
-        <div>Please enter perpetuity growth rate (in decimals)</div>
-    </div><br>
-    <form action="/dcf/private/terminal" method="POST">
-        <input type="number" name="growth" required="required" autofocus min="0" step="0.0001" value="0.02"><br><br>
-        <button class="action" type="submit">Calculate</button>
-    </form><br>
-
-{% else %}
-    <div class="flex-info">
-        <div id="emoji-info3">&#128071</div>
         <div>Please enter net debt value</div>
     </div><br>
-    <form action="/dcf/private/value" method="GET">
-        <input type="number" name="net_debt" required="required" autofocus min="0" ><br><br>
-        <button class="action" type="submit">Calculate target value</button>
+    <form action="/dcf/private/terminal" method="POST">
+        <input type="number" name="net_debt" required="required" autofocus min="1" step="1" value=""><br><br>
+        <button class="action" type="submit">Calculate</button>
     </form><br>
-{% endif %}
+{% else %}
+    <div class="flex-menu">
+      <form action="/dcf/private/terminal" method="POST">
+        <button type="submit" name="next_page" value="value">Calculate target value</button>
+      </form>
+    </div><br>
 
 <table border="1" class="dataframe_indicator">
   <tbody>
     <tr>
-      <th>Revenue CAGR</th>
-      <td>{{ revenue_g }}</td>
-    </tr>
-    <tr>
-      <th>WACC</th>
-      <td>{{ wacc }}</td>
-    </tr>
-    <tr>
       <th>Perpetuity growth rate</th>
-      <td>{{ growth }}</td>
+      <td>{{ perpetuity_growth }}</td>
+    </tr>
+    <tr>
+      <th>Perpetuity cost of capital</th>
+      <td>{{ perpetuity_wacc }}</td>
+    </tr>
+    <tr>
+      <th>FCFF at terminal year</th>
+      <td>{{ fcff_terminal }}</td>
     </tr>
     <tr>
       <th>Terminal value</th>
-      <td>{{ tv }}</td>
+      <td>{{ terminal_value }}</td>
     </tr>
   </tbody>
 </table>
+{% endif %}
 {% endblock %}
-

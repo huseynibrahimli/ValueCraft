@@ -34,6 +34,7 @@ body {background: GhostWhite no-repeat center fixed; background-size:cover}
 input[name="ticker"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 input[name="growth"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 input[name="cagr_years"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
+input[name="net_debt"] {width:10vw; padding:0.5vw; font-size:1vw; margin-left:1vw}
 label[for="company_type"]  {font-weight:bold; margin-left:1vw}
 #company_type {}
 
@@ -45,6 +46,7 @@ label[for="company_type"]  {font-weight:bold; margin-left:1vw}
 input[name="ticker"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
 input[name="growth"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
 input[name="cagr_years"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
+input[name="net_debt"] {width:40vw; padding:1vw; font-size:5vw; margin-bottom:5vw}
 label[for="company_type"] {font-size:5vw; margin-bottom:5vw}
 #company_type {transform:scale(2); margin-left:2vw; margin-bottom:5vw}
 }
