@@ -4,8 +4,6 @@
     <!-- Home Page -->
     <url>
         <loc>https://www.valuecraft.de/</loc>
-        <changefreq>daily</changefreq>
-        <priority>1.0</priority>
         <lastmod>2024-01-11</lastmod>
     </url>
     <url>
