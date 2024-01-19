@@ -20,43 +20,75 @@
   </tbody>
 </table>
 
-<table border="1" class="dataframe_summary">
-  <tbody>
-    <tr>
-      <th>WACC</th>
-      <td>{{ wacc }}</td>
-    </tr>
-    <tr>
-      <th>Perpetuity growth rate</th>
-      <td>{{ perpetuity_growth }}</td>
-    </tr>
-    <tr>
-      <th>Terminal value</th>
-      <td>{{ terminal_value }}</td>
-    </tr>
-  </tbody>
-</table>
+{% if company_type == "bank" %}
+  <table border="1" class="dataframe_summary">
+    <tbody>
+      <tr>
+        <th>Cost of equity</th>
+        <td>{{ cost_equity }}</td>
+      </tr>
+      <tr>
+        <th>Perpetuity growth rate</th>
+        <td>{{ perpetuity_growth }}</td>
+      </tr>
+      <tr>
+        <th>Terminal value</th>
+        <td>{{ terminal_value }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<table border="1" class="dataframe_summary">
-  <tbody>
-    <tr>
-      <th>Equity value</th>
-      <td>{{ equity_value }}</td>
-    </tr>
-    <tr>
-      <th>Net debt</th>
-      <td>{{ net_debt }}</td>
-    </tr>
-    <tr>
-      <th>Firm value</th>
-      <td>{{ firm_value }}</td>
-    </tr>
-    <tr>
-      <th>Shares</th>
-      <td>{{ n_shares }}</td>
-    </tr>
-  </tbody>
-</table>
+  <table border="1" class="dataframe_summary">
+    <tbody>
+      <tr>
+        <th>Equity value</th>
+        <td>{{ equity_value }}</td>
+      </tr>
+      <tr>
+        <th>Shares</th>
+        <td>{{ n_shares }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% else %}
+  <table border="1" class="dataframe_summary">
+    <tbody>
+      <tr>
+        <th>WACC</th>
+        <td>{{ wacc }}</td>
+      </tr>
+      <tr>
+        <th>Perpetuity growth rate</th>
+        <td>{{ perpetuity_growth }}</td>
+      </tr>
+      <tr>
+        <th>Terminal value</th>
+        <td>{{ terminal_value }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table border="1" class="dataframe_summary">
+    <tbody>
+      <tr>
+        <th>Equity value</th>
+        <td>{{ equity_value }}</td>
+      </tr>
+      <tr>
+        <th>Net debt</th>
+        <td>{{ net_debt }}</td>
+      </tr>
+      <tr>
+        <th>Firm value</th>
+        <td>{{ firm_value }}</td>
+      </tr>
+      <tr>
+        <th>Shares</th>
+        <td>{{ n_shares }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endif %}
 
 <div class="flex-menu">
   <form action="/dcf" method="POST">

@@ -119,15 +119,15 @@ class Private:
         fcf = pd.read_json(fcf)
         projection_period = int(projection_period)
         discount_factor = float(fcf[f"T+{projection_period}"]["Discount factor"])
-        fcff_terminal = float(fcf[f"T+{projection_period}"]["FCFF"])
-        if fcff_terminal > 0:
-            terminal_value = (fcff_terminal * (1 + perpetuity_growth)) / (perpetuity_wacc - perpetuity_growth)
+        fcf_terminal = float(fcf[f"T+{projection_period}"]["FCFF"])
+        if fcf_terminal > 0:
+            terminal_value = (fcf_terminal * (1 + perpetuity_growth)) / (perpetuity_wacc - perpetuity_growth)
             terminal_value_pv = max(round(terminal_value * discount_factor), 0)
         else:
             terminal_value = 0
             terminal_value_pv = 0
 
-        return fcff_terminal, terminal_value, terminal_value_pv
+        return fcf_terminal, terminal_value, terminal_value_pv
 
     def calc_dcf(self, fcf, terminal_value_pv, net_debt):
         fcf = pd.read_json(fcf)

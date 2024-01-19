@@ -86,14 +86,14 @@ def public_wacc():
             cost_debt = "{:.2%}".format(wacc_calc[1])
             session["risk_free"] = float(wacc_calc[2])
             credit_spread = "{:.2%}".format(wacc_calc[3])
-            cost_equity = "{:.2%}".format(wacc_calc[4])
+            session["cost_equity"] = float(wacc_calc[4])
             session["equity_risk_premium"] = float(wacc_calc[5])
             beta = "{:.2f}".format(wacc_calc[6])
             session["tax_rate"] = float(wacc_calc[7])
             equity_weight = "{:.2%}".format(wacc_calc[8])
             return render_template("dcf/public/wacc.html", wacc="{:.2%}".format(session["wacc"]),
                                    type=wacc_type, cost_debt=cost_debt, risk_free="{:.2%}".format(session["risk_free"]), credit_spread=credit_spread,
-                                   cost_equity=cost_equity, equity_risk_premium="{:.2%}".format(session["equity_risk_premium"]),
+                                   cost_equity="{:.2%}".format(session["cost_equity"]), equity_risk_premium="{:.2%}".format(session["equity_risk_premium"]),
                                    beta=beta, tax_rate="{:.2%}".format(session["tax_rate"]), equity_weight=equity_weight)
 
         elif wacc_type == "manual":
@@ -108,11 +108,11 @@ def public_wacc():
                 session["tax_rate"] = float(request.form["tax_rate"])
                 equity_weight = float(request.form["equity_weight"])
                 cost_debt = session["risk_free"] + credit_spread
-                cost_equity = session["risk_free"] + (beta * session["equity_risk_premium"])
-                session["wacc"] = (cost_debt * (1 - session["tax_rate"]) * (1 - equity_weight)) + (cost_equity * equity_weight)
+                session["cost_equity"] = session["risk_free"] + (beta * session["equity_risk_premium"])
+                session["wacc"] = (cost_debt * (1 - session["tax_rate"]) * (1 - equity_weight)) + (session["cost_equity"] * equity_weight)
                 return render_template("dcf/public/wacc.html", wacc="{:.2%}".format(session["wacc"]),
                                        type=wacc_type, cost_debt="{:.2%}".format(cost_debt), risk_free="{:.2%}".format(session["risk_free"]),
-                                       credit_spread="{:.2%}".format(credit_spread), cost_equity="{:.2%}".format(cost_equity),
+                                       credit_spread="{:.2%}".format(credit_spread), cost_equity="{:.2%}".format(session["cost_equity"]),
                                        equity_risk_premium="{:.2%}".format(session["equity_risk_premium"]), beta="{:.2f}".format(beta),
                                        tax_rate="{:.2%}".format(session["tax_rate"]), equity_weight="{:.2%}".format(equity_weight))
         elif next_page is not None:
@@ -131,7 +131,7 @@ def public_fcf():
             session["perpetuity_growth"] = float(request.form["perpetuity_growth"])
             session["perpetuity_wacc"] = float(request.form["perpetuity_wacc"])
             session["fcf"] = public.engine.project_fcf(session["ticker"], session["user_id"], session["company_type"], session["revenue_g"], session["tax_rate"],
-                                                       session["wacc"], session["projection_period"], session["convergence_year"],
+                                                       session["wacc"],  session["cost_equity"], session["projection_period"], session["convergence_year"],
                                                        session["perpetuity_growth"], session["perpetuity_wacc"]).to_json()
 
             return render_template("dcf/public/fcf.html", fcf=True)
@@ -156,14 +156,15 @@ def public_terminal():
         next_page = request.form.get("next_page")
         if next_page is not None:
             return redirect(url_for("dcf.public_value"))
-    terminal_value_calc = public.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"])
-    session["fcff_terminal"] = float(terminal_value_calc[0])
+    terminal_value_calc = public.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"],
+                                                session["company_type"])
+    session["fcf_terminal"] = float(terminal_value_calc[0])
     session["terminal_value"] = float(terminal_value_calc[1])
     session["terminal_value_pv"] = float(terminal_value_calc[2])
 
     return render_template("dcf/public/terminal.html", ticker=session["ticker"],
                            perpetuity_growth="{:.2%}".format(session["perpetuity_growth"]), perpetuity_wacc="{:.2%}".format(session["perpetuity_wacc"]),
-                           fcff_terminal="{:,.0f}".format(session["fcff_terminal"]), terminal_value="{:,.0f}".format(session["terminal_value"]))
+                           fcf_terminal="{:,.0f}".format(session["fcf_terminal"]), terminal_value="{:,.0f}".format(session["terminal_value"]))
 
 
 @bp.route("/public/value", methods=("GET", "POST"))
@@ -184,9 +185,10 @@ def public_value():
             os.remove(file_path)
 
     return render_template("dcf/public/value.html", ticker=session["ticker"], target_price=target_price, market_price=market_price,
-                           wacc="{:.2%}".format(session["wacc"]), perpetuity_growth="{:.2%}".format(session["perpetuity_growth"]),
+                           wacc="{:.2%}".format(session["wacc"]), cost_equity="{:.2%}".format(session["cost_equity"]),
+                           perpetuity_growth="{:.2%}".format(session["perpetuity_growth"]),
                            terminal_value="{:,.0f}".format(session["terminal_value"]),  equity_value=equity_value, net_debt=net_debt,  firm_value=firm_value,
-                           n_shares=n_shares)
+                           n_shares=n_shares, company_type=session["company_type"])
 
 
 @bp.route("/private/statement", methods=("GET", "POST"))
@@ -346,13 +348,14 @@ def private_terminal():
 
         if net_debt is not None:
             session["net_debt"] = float(request.form["net_debt"])
-            terminal_value_calc = private.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"])
-            session["fcff_terminal"] = float(terminal_value_calc[0])
+            terminal_value_calc = private.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"],
+                                                         session["company_type"])
+            session["fcf_terminal"] = float(terminal_value_calc[0])
             session["terminal_value"] = float(terminal_value_calc[1])
             session["terminal_value_pv"] = float(terminal_value_calc[2])
 
             return render_template("dcf/private/terminal.html", perpetuity_growth="{:.2%}".format(session["perpetuity_growth"]),
-                                   perpetuity_wacc="{:.2%}".format(session["perpetuity_wacc"]), fcff_terminal="{:,.0f}".format(session["fcff_terminal"]),
+                                   perpetuity_wacc="{:.2%}".format(session["perpetuity_wacc"]), fcf_terminal="{:,.0f}".format(session["fcf_terminal"]),
                                    terminal_value="{:,.0f}".format(session["terminal_value"]))
         if next_page is not None:
             return redirect(url_for("dcf.private_value"))

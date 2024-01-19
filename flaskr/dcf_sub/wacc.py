@@ -53,9 +53,12 @@ class WACC:
         credit_ratings.set_index("Symbol", inplace=True)
         credit_ratings.index.name = None
         credit_ratings.rename_axis("Ticker", axis="columns", inplace=True)
-        credit_spread = credit_ratings.loc[company, "Spread"]
 
-        if credit_spread is None:
+        try:
+            credit_spread = credit_ratings.loc[company, "Spread"]
+        except Exception as e:
+            print(f"Sufficient information doesn't exist: {e}")
+
             # https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html
             credit_bands = {8.5: 0.0059, 6.5: 0.007, 5.5: 0.0092, 4.25: 0.0107, 3: 0.0121, 2.5: 0.0147, 2.25: 0.0174,
                             2: 0.0221, 1.75: 0.0314, 1.5: 0.0361, 1.25: 0.0524, 0.8: 0.0851, 0.65: 0.1178, 0.2: 0.17,
