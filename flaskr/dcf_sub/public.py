@@ -104,6 +104,9 @@ class Public:
                     revenue_g.append(item["revenue"])
                     count = count + 1
             revenue_g = (revenue_g[0] / revenue_g[-1]) ** (1 / actual_period) - 1
+        
+        if revenue_g < 0:
+            revenue_g = 0
 
         return revenue_g
 
