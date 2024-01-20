@@ -348,8 +348,7 @@ def private_terminal():
 
         if net_debt is not None:
             session["net_debt"] = float(request.form["net_debt"])
-            terminal_value_calc = private.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"],
-                                                         session["company_type"])
+            terminal_value_calc = private.engine.calc_tv(session["perpetuity_growth"], session["perpetuity_wacc"], session["fcf"], session["projection_period"])
             session["fcf_terminal"] = float(terminal_value_calc[0])
             session["terminal_value"] = float(terminal_value_calc[1])
             session["terminal_value_pv"] = float(terminal_value_calc[2])

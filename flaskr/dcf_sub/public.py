@@ -291,18 +291,21 @@ class Public:
         net_debt = balance_sheet[0]["netDebt"]
 
         if company_type == "bank":
-            equity_value = firm_value
+            if firm_value > 0:
+                equity_value = firm_value
+            else:
+                equity_value = 0
         else:
             if firm_value > 0:
                 equity_value = max(firm_value - net_debt, 0)
             else:
                 equity_value = 0
-            firm_value = equity_value + net_debt
+                firm_value = net_debt
 
         number_of_shares = market_info[0]["sharesOutstanding"]
         actual_price_per_share = market_info[0]["price"]
         target_price_per_share = equity_value / number_of_shares
-
+        print(pv_fcff, terminal_value_pv)
         return target_price_per_share, actual_price_per_share, firm_value, net_debt, equity_value, number_of_shares
 
 
