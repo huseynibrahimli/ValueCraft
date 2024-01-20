@@ -1,4 +1,3 @@
-import numpy_financial as npf
 import pandas as pd
 
 pd.options.display.float_format = "{:,.0f}".format
