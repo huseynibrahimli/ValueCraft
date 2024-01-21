@@ -47,7 +47,7 @@
             <div>Please enter time period in years to calculate compound annual growth rate of revenue</div>
         </div><br>
         <form action="/dcf/public/statement" method="POST">
-            <input type="number" name="cagr_years" required="required" autofocus min="1" step="1" value="10"><br><br>
+            <input type="number" name="cagr_years" required="required" autofocus min="1" max="20" step="1" value="10"><br><br>
             <button class="action" type="submit">Calculate</button>
         </form><br>
     {% else %}

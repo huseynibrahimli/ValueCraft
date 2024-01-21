@@ -85,6 +85,7 @@ class Public:
             f"https://financialmodelingprep.com/api/v3/income-statement/{company}?apikey={self.key}").json()
 
         default_years = 5
+
         try:
             count = 0
             revenue_g = []
@@ -118,6 +119,9 @@ class Public:
 
         balance_sheet = requests.get(
             f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company}?apikey={self.key}").json()
+
+        if convergence_year > projection_period:
+            convergence_year = projection_period
 
         revenue_g_delta = (revenue_g - perpetuity_growth) / (projection_period - convergence_year + 1)
         wacc_delta = (wacc - perpetuity_wacc) / (projection_period - convergence_year + 1)
@@ -308,7 +312,7 @@ class Public:
         number_of_shares = market_info[0]["sharesOutstanding"]
         actual_price_per_share = market_info[0]["price"]
         target_price_per_share = equity_value / number_of_shares
-        print(pv_fcff, terminal_value_pv)
+
         return target_price_per_share, actual_price_per_share, firm_value, net_debt, equity_value, number_of_shares
 
 
