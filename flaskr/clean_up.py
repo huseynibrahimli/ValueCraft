@@ -11,7 +11,6 @@ def clean_up():
                 os.remove(file_path)
 
     folder_path = "flaskr/data/dcf/temp"
-
     if os.path.exists(folder_path):
         files = os.listdir(folder_path)
         for file in files:
