@@ -116,7 +116,6 @@ class Public:
             f"https://financialmodelingprep.com/api/v3/income-statement/{company}?apikey={self.key}").json()
         cash_flow = requests.get(
             f"https://financialmodelingprep.com/api/v3/cash-flow-statement/{company}?apikey={self.key}").json()
-
         balance_sheet = requests.get(
             f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company}?apikey={self.key}").json()
 
@@ -162,10 +161,10 @@ class Public:
 
         except Exception as e:
             print(f"Sufficient information doesn't exist: {e}")
-            df_is = pd.DataFrame(income_statement[0:6])
+            df_is = pd.DataFrame(income_statement[0:5])
             df_is = df_is.transpose()
             df_is = df_is[8:32]
-            df_is.columns = ["T", "T-1", "T-2", "T-3", "T-4", "T-5"]
+            df_is.columns = ["T", "T-1", "T-2", "T-3", "T-4"]
             df_is["T-Average"] = df_is.mean(axis=1)
             df_is["%_revenue"] = df_is["T-Average"] / df_is["T-Average"].iloc[0]
             df_is = df_is.astype(float)
@@ -173,7 +172,7 @@ class Public:
             df_cf = pd.DataFrame(cash_flow[0:6])
             df_cf = df_cf.transpose()
             df_cf = df_cf[8:-2]
-            df_cf.columns = ["T", "T-1", "T-2", "T-3", "T-4", "T-5"]
+            df_cf.columns = ["T", "T-1", "T-2", "T-3", "T-4"]
             df_cf["T-Average"] = df_cf.mean(axis=1)
             df_cf["%_revenue"] = df_cf["T-Average"] / df_is["T-Average"].iloc[0]
             df_cf = df_cf.astype(float)
@@ -181,7 +180,7 @@ class Public:
             df_bs = pd.DataFrame(balance_sheet[0:6])
             df_bs = df_bs.transpose()
             df_bs = df_bs[8:-2]
-            df_bs.columns = ["T", "T-1", "T-2", "T-3", "T-4", "T-5"]
+            df_bs.columns = ["T", "T-1", "T-2", "T-3", "T-4"]
             tangible_common_equity = df_bs.loc["totalStockholdersEquity", :] - df_bs.loc["preferredStock", :] - df_bs.loc["goodwillAndIntangibleAssets", :]
             df_bs.loc["tangible_common_equity", :] = tangible_common_equity
             df_bs["T-Average"] = df_bs.mean(axis=1)
