@@ -1,6 +1,6 @@
 # Financial valuation and modeling projects
 
-This is a web project developed in Python using Flask to perform financial valuation and modeling. 
+This is a web project developed in Python using Flask to perform financial valuation and modeling.
 
 ## Table of Contents
 
