@@ -44,10 +44,11 @@ class WACC:
         equity_weight = equity_value / (equity_value + debt_value)
         debt_weight = 1 - equity_weight
 
-        start = (datetime.datetime.today() - datetime.timedelta(days=10))
-        end = datetime.datetime.now()
-        treasury_10Y = web.DataReader("DGS10", "fred", start, end)
-        risk_free = treasury_10Y.iloc[-1, 0] / 100
+        # start = (datetime.datetime.today() - datetime.timedelta(days=10))
+        # end = datetime.datetime.now()
+        # treasury_10Y = web.DataReader("DGS10", "fred", start, end)
+        # risk_free = treasury_10Y.iloc[-1, 0] / 100
+        risk_free = 0.0435
 
         credit_ratings = pd.read_json("flaskr/data/dcf/credit_ratings.json")
         credit_ratings.set_index("Symbol", inplace=True)
