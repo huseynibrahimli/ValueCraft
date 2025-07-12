@@ -4,7 +4,7 @@ setup(
     name='ValueCraft',
     version='1.0.0',
     packages=['tests', 'flaskr'],
-    url='www.valuecraft.de',
+    url='huseynibrahimli.pythonanywhere.com',
     license='',
     author='Huseyn Ibrahimli',
     author_email='huseynibrahimli@gmail.com',
